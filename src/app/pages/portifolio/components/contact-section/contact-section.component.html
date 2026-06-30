@@ -1,179 +1,89 @@
-<section class="fullpage-section contact-section" id="contact">
-  <div class="section-content">
-    <div class="section-header">
-      <h2 class="section-title">
-        <span class="highlight">04.</span> Contato
-      </h2>
-    </div>
-    
-    <div class="contact-container">
-      <div class="contact-info">
-        <div class="info-card">
-          <div class="card-icon">
-            <i class="fas fa-rocket"></i>
-          </div>
-          <h3>Pronto para colaborar?</h3>
-          <p>Estou sempre aberto a discutir novas oportunidades, projetos interessantes e colaborações criativas. Vamos transformar suas ideias em realidade!</p>
-          
-          <div class="contact-methods">
-            <div class="contact-item" data-aos="fade-up" data-aos-delay="100">
-              <div class="item-icon">
-                <i class="fas fa-envelope"></i>
-              </div>
-              <div class="item-content">
-                <span class="item-label">Email</span>
-                <a href="mailto:pedro.bicas14@gmail.com" class="item-value">pedro.bicas14&#64;gmail.com</a>
-              </div>
-            </div>
-            
-            <div class="contact-item" data-aos="fade-up" data-aos-delay="200">
-              <div class="item-icon">
-                <i class="fas fa-phone-alt"></i>
-              </div>
-              <div class="item-content">
-                <span class="item-label">Telefone</span>
-                <a href="tel:+551199358-5087" class="item-value">+55 (11) 99358-5087</a>
-              </div>
-            </div>
-            
-            <div class="contact-item" data-aos="fade-up" data-aos-delay="300">
-              <div class="item-icon">
-                <i class="fas fa-map-marker-alt"></i>
-              </div>
-              <div class="item-content">
-                <span class="item-label">Localização</span>
-                <span class="item-value">São Paulo, Brasil</span>
-              </div>
-            </div>
-          </div>
-          
-          <div class="social-section">
-            <h4>Me encontre também em:</h4>
-            <div class="social-links">
-              <a href="https://github.com/pedrobicas" target="_blank" class="social-link github" title="GitHub">
-                <i class="fab fa-github"></i>
-                <span>GitHub</span>
-              </a>
-              <a href="https://linkedin.com/in/pedrobicas" target="_blank" class="social-link linkedin" title="LinkedIn">
-                <i class="fab fa-linkedin-in"></i>
-                <span>LinkedIn</span>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <div class="contact-form-wrapper">
-        <div class="form-card">
-          <div class="form-header">
-            <h3>Envie uma mensagem</h3>
-            <p>Preencha o formulário abaixo e entrarei em contato em breve</p>
-          </div>
-          
-          <form [formGroup]="contactForm!" (ngSubmit)="onFormSubmit()" class="contact-form">
-            <div class="form-row">
-              <div class="form-group">
-                <label for="name">
-                  <i class="fas fa-user"></i>
-                  Nome completo
-                </label>
-                <input 
-                  type="text" 
-                  id="name" 
-                  formControlName="name" 
-                  required 
-                  placeholder="Digite seu nome completo"
-                  [class.error]="contactForm?.get('name')?.invalid && contactForm?.get('name')?.touched">
-                <div class="error-message" *ngIf="contactForm?.get('name')?.invalid && contactForm?.get('name')?.touched">
-                  Nome é obrigatório
-                </div>
-              </div>
-              
-              <div class="form-group">
-                <label for="email">
-                  <i class="fas fa-envelope"></i>
-                  Email
-                </label>
-                <input 
-                  type="email" 
-                  id="email" 
-                  formControlName="email" 
-                  required 
-                  placeholder="seu@email.com"
-                  [class.error]="contactForm?.get('email')?.invalid && contactForm?.get('email')?.touched">
-                <div class="error-message" *ngIf="contactForm?.get('email')?.invalid && contactForm?.get('email')?.touched">
-                  <span *ngIf="contactForm?.get('email')?.errors?.['required']">Email é obrigatório</span>
-                  <span *ngIf="contactForm?.get('email')?.errors?.['email']">Email inválido</span>
-                </div>
-              </div>
-            </div>
-            
-            <div class="form-group">
-              <label for="subject">
-                <i class="fas fa-tag"></i>
-                Assunto
-              </label>
-              <select id="subject" formControlName="subject" required>
-                <option value="">Selecione um assunto</option>
-                <option value="freelance">Projeto Freelance</option>
-                <option value="job">Oportunidade de Trabalho</option>
-                <option value="collaboration">Colaboração</option>
-                <option value="consultation">Consultoria</option>
-                <option value="other">Outro</option>
-              </select>
-            </div>
-            
-            <div class="form-group">
-              <label for="message">
-                <i class="fas fa-comment-dots"></i>
-                Mensagem
-              </label>
-              <textarea 
-                id="message" 
-                formControlName="message" 
-                rows="6" 
-                required 
-                placeholder="Conte-me sobre seu projeto ou ideia..."
-                [class.error]="contactForm?.get('message')?.invalid && contactForm?.get('message')?.touched"></textarea>
-              <div class="error-message" *ngIf="contactForm?.get('message')?.invalid && contactForm?.get('message')?.touched">
-                Mensagem é obrigatória
-              </div>
-              <div class="char-counter">
-                {{ contactForm?.get('message')?.value?.length || 0 }}/500
-              </div>
-            </div>
-            
-            <button type="submit" class="submit-button" [disabled]="contactForm?.invalid || submitting">
-              <span class="button-content" *ngIf="!submitting">
-                <i class="fas fa-paper-plane"></i>
-                Enviar Mensagem
-              </span>
-              <span class="button-content loading" *ngIf="submitting">
-                <i class="fas fa-spinner fa-spin"></i>
-                Enviando...
-              </span>
-            </button>
-          </form>
-          
-          <div class="form-messages">
-            <div class="success-message" *ngIf="submitSuccess" [@slideIn]>
-              <i class="fas fa-check-circle"></i>
-              <div>
-                <strong>Mensagem enviada com sucesso!</strong>
-                <p>Obrigado pelo contato. Responderei em breve!</p>
-              </div>
-            </div>
-            
-            <div class="error-message-global" *ngIf="submitError" [@slideIn]>
-              <i class="fas fa-exclamation-triangle"></i>
-              <div>
-                <strong>Erro ao enviar mensagem</strong>
-                <p>Tente novamente ou entre em contato diretamente pelo email.</p>
-              </div>
-            </div>
-          </div>
-        </div>
+﻿<section class="contact-section" id="contact">
+  <div class="contact-layout">
+    <div class="contact-copy">
+      <span class="section-kicker">05 / Contato</span>
+      <h2 class="section-title">Contato direto</h2>
+      <p>
+        Para conversar sobre projetos, colaboração ou algum contexto técnico, use o formulário ou os links. O contato fica direto, sem fricção.
+      </p>
+
+      <div class="contact-links">
+        <a href="mailto:pedro.bicas14&#64;gmail.com">
+          <i class="fas fa-envelope" aria-hidden="true"></i>
+          pedro.bicas14&#64;gmail.com
+        </a>
+        <a href="tel:+5511993585087">
+          <i class="fas fa-phone" aria-hidden="true"></i>
+          +55 (11) 99358-5087
+        </a>
+        <a href="https://linkedin.com/in/pedrobicas" target="_blank" rel="noopener noreferrer">
+          <i class="fab fa-linkedin-in" aria-hidden="true"></i>
+          LinkedIn
+        </a>
       </div>
     </div>
+
+    <form [formGroup]="contactForm!" (ngSubmit)="onFormSubmit()" class="contact-form" novalidate>
+      <div class="form-row">
+        <label>
+          <span>Nome</span>
+          <input type="text" formControlName="name" placeholder="Seu nome" [class.error]="hasError('name')">
+          <small *ngIf="hasError('name')">{{ getErrorMessage('name') }}</small>
+        </label>
+
+        <label>
+          <span>Email</span>
+          <input type="email" formControlName="email" placeholder="voce@email.com" [class.error]="hasError('email')">
+          <small *ngIf="hasError('email')">{{ getErrorMessage('email') }}</small>
+        </label>
+      </div>
+
+      <div class="form-row">
+        <label>
+          <span>Assunto</span>
+          <select formControlName="subject" [class.error]="hasError('subject')">
+            <option value="">Selecione</option>
+            <option value="freelance">Projeto freelance</option>
+            <option value="job-opportunity">Contato profissional</option>
+            <option value="collaboration">Colaboração</option>
+            <option value="consulting">Consultoria</option>
+          </select>
+          <small *ngIf="hasError('subject')">{{ getErrorMessage('subject') }}</small>
+        </label>
+
+        <label>
+          <span>Tipo</span>
+          <select formControlName="projectType" [class.error]="hasError('projectType')">
+            <option value="">Selecione</option>
+            <option value="frontend">Frontend</option>
+            <option value="backend">Backend/API</option>
+            <option value="dashboard">Dashboard/Dados</option>
+            <option value="fullstack">Produto full-stack</option>
+          </select>
+          <small *ngIf="hasError('projectType')">{{ getErrorMessage('projectType') }}</small>
+        </label>
+      </div>
+
+      <label class="message-field">
+        <span>Mensagem</span>
+        <textarea rows="7" formControlName="message" placeholder="Conte o objetivo, prazo e o que já existe hoje..." [class.error]="hasError('message')"></textarea>
+        <small *ngIf="hasError('message')">{{ getErrorMessage('message') }}</small>
+        <em>{{ messageCharCount }}/{{ maxMessageLength }}</em>
+      </label>
+
+      <button type="submit" class="submit-button" [disabled]="contactForm?.invalid || submitting">
+        <span *ngIf="!submitting">Enviar mensagem</span>
+        <span *ngIf="submitting"><i class="fas fa-spinner fa-spin" aria-hidden="true"></i> Enviando</span>
+      </button>
+
+      <div class="form-message success" *ngIf="submitSuccess" [@slideIn]>
+        Mensagem enviada. Obrigado pelo contato.
+      </div>
+      <div class="form-message error" *ngIf="submitError" [@slideIn]>
+        {{ submitError }}
+      </div>
+    </form>
   </div>
 </section>
+
+

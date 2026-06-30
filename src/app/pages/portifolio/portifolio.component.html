@@ -1,73 +1,125 @@
-<div class="portfolio-page" [class.dark-theme]="darkTheme()">
-  
-  <!-- Fundo Dinâmico e Animado -->
+﻿<div class="portfolio-page">
   <app-dynamic-background></app-dynamic-background>
-  
-  <!-- Navegação Simplificada para Scroll -->
-  <nav class="scroll-nav" *ngIf="!isMobile">
-    <div class="nav-dots">
+
+  <header class="site-header" [class.menu-open]="isMobileMenuOpen()">
+    <a class="brand-mark" href="#home" (click)="scrollToSection('home')">
+      <span class="brand-symbol">PB</span>
+      <span class="brand-copy">pedrobicas.dev</span>
+    </a>
+
+    <button class="mobile-menu-toggle" type="button" (click)="toggleMobileMenu()" [attr.aria-expanded]="isMobileMenuOpen()" aria-controls="portfolio-main-nav" aria-label="Abrir navegação">
+      <span class="menu-icon" aria-hidden="true"><span></span><span></span></span>
+      <span>Menu</span>
+    </button>
+
+    <nav id="portfolio-main-nav" class="top-nav" [class.menu-open]="isMobileMenuOpen()" aria-label="Navegação principal">
       <button *ngFor="let section of sectionIds; let i = index"
-              class="nav-dot"
+              type="button"
               [class.active]="activeSection() === section"
-              (click)="scrollToSection(section)"
-              [attr.aria-label]="getSectionDisplayName(section)">
+              (click)="scrollToSection(section)">
+        <span>{{ i + 1 | number:'2.0' }}</span>
+        {{ getSectionDisplayName(section) }}
       </button>
-    </div>
+    </nav>
+  </header>
+
+  <nav class="scroll-nav" *ngIf="!isMobile" aria-label="Navegação por seções">
+    <button *ngFor="let section of sectionIds; let i = index"
+            class="nav-dot"
+            [class.active]="activeSection() === section"
+            (click)="scrollToSection(section)"
+            [attr.aria-label]="getSectionDisplayName(section)">
+      <span>{{ i + 1 | number:'2.0' }}</span>
+    </button>
   </nav>
-  
-  <!-- Container das Seções com Scroll Normal -->
-  <div class="sections-container">
-    
-    <!-- Seção Hero -->
-    <section class="section animate-section animate-hero" id="home" #homeSection>
+
+  <main class="sections-container">
+    <section class="section hero-shell" id="home" #homeSection>
       <div class="section-content">
         <app-hero-section
           [name]="'Pedro Bicas'"
-          [role]="'Desenvolvedor FullStack'"
-          [avatar]="'assets/images/developer-activity-animate.svg'"
-          [socialLinks]="socialLinks"
-        >
-          <button class="modern-btn cta-btn" (click)="scrollToSection('skills')">
-            <span>Explorar Portfólio</span>
+          [role]="'Desenvolvedor Full Stack'"
+          [socialLinks]="socialLinks">
+          <button class="cta-btn" type="button" (click)="scrollToSection('studio')">
+            <span>Abrir Studio</span>
+            <i class="fas fa-arrow-right" aria-hidden="true"></i>
           </button>
         </app-hero-section>
       </div>
     </section>
 
-    <!-- Seção Habilidades -->
-    <section class="section animate-section" id="skills" #skillsSection>
+    <section class="section studio-section" id="studio" #studioSection>
+      <div class="section-content">
+        <div class="studio-grid">
+          <div class="studio-copy">
+            <span class="section-kicker">01 / Studio</span>
+            <h2>{{ studioOverview.title }}</h2>
+            <p class="studio-subtitle">{{ studioOverview.subtitle }}</p>
+            <p>{{ studioOverview.description }}</p>
+            <a class="studio-link" [href]="studioOverview.url" target="_blank" rel="noopener noreferrer">
+              Abrir studio.pedrobicas.dev
+              <i class="fas fa-arrow-up-right-from-square" aria-hidden="true"></i>
+            </a>
+          </div>
+
+          <div class="studio-panel" aria-label="Resumo do Pedro Bicas Studio">
+            <div class="studio-preview">
+              <div class="preview-bar">
+                <span></span><span></span><span></span>
+                <strong>studio.pedrobicas.dev</strong>
+              </div>
+              <div class="preview-screen">
+                <div class="screen-line wide"></div>
+                <div class="screen-line"></div>
+                <div class="screen-grid">
+                  <span *ngFor="let demo of studioOverview.demos; let i = index" [style.--delay]="i * 120">
+                    {{ demo }}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="studio-metrics">
+              <div *ngFor="let metric of studioOverview.metrics">
+                <strong>{{ metric.value }}</strong>
+                <span>{{ metric.label }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="skills" #skillsSection>
       <div class="section-content">
         <app-skills-section [skillCategories]="skillCategories"></app-skills-section>
       </div>
     </section>
 
-    <!-- Seção Experiência -->
-    <section class="section animate-section" id="experience" #experienceSection>
+    <section class="section" id="experience" #experienceSection>
       <div class="section-content">
         <app-experience-section [experiences]="experiences"></app-experience-section>
       </div>
     </section>
 
-    <!-- Seção Projetos -->
-    <section class="section animate-section" id="projects" #projectsSection>
+    <section class="section" id="projects" #projectsSection>
       <div class="section-content">
         <app-projects-section [projects]="projects"></app-projects-section>
       </div>
     </section>
 
-    <!-- Seção Contato -->
-    <section class="section animate-section" id="contact" #contactSection>
+    <section class="section" id="contact" #contactSection>
       <div class="section-content">
-        <app-contact-section 
+        <app-contact-section
           [contactForm]="contactForm"
           [submitting]="submitting()"
           [submitSuccess]="submitSuccess()"
           [submitError]="submitError()"
-          [onSubmit]="onContactFormSubmit"
-        ></app-contact-section>
+          [onSubmit]="onContactFormSubmit">
+        </app-contact-section>
       </div>
     </section>
-    
-  </div>
+  </main>
 </div>
+
 

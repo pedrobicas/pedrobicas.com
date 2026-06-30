@@ -1,58 +1,40 @@
-<section class="fullpage-section skills-section" id="skills">
-  <div class="section-content">
-    <h2 class="section-title"><span class="highlight">01.</span> Habilidades</h2>
-    
-    <div class="skills-minimal">
-      <div class="category-filters">
-        <button class="filter-pill active" 
-                data-category="all"
-                (click)="filterByCategory('all')">
-          <span class="pill-text">Todas</span>
-        </button>
-        <button class="filter-pill" 
-                data-category="Front-end"
-                (click)="filterByCategory('Front-end')">
-          <span class="pill-text">Frontend</span>
-        </button>
-        <button class="filter-pill" 
-                data-category="Back-end"
-                (click)="filterByCategory('Back-end')">
-          <span class="pill-text">Backend</span>
-        </button>
-        <button class="filter-pill" 
-                data-category="Banco de Dados"
-                (click)="filterByCategory('Banco de Dados')">
-          <span class="pill-text">Database</span>
-        </button>
-        <button class="filter-pill" 
-                data-category="Outros"
-                (click)="filterByCategory('Outros')">
-          <span class="pill-text">Outros</span>
-        </button>
-      </div>
-
-      <!-- Skills Grid Container -->
-      <div class="icon-grid-wrap">
-        <div class="icon-grid">
-          <button class="icon-cell" *ngFor="let s of filteredIcons(); let i = index"
-                  (mouseenter)="onIconEnter(i)"
-                  (mouseleave)="onIconLeave()"
-                  [class.dimmed]="hoveredIndex() !== null && hoveredIndex() !== i"
-                  [attr.data-cat]="s._category"
-                  [style.animation-delay]="(i * 30) + 'ms'">
-            <div class="icon-bg"></div>
-            <span class="glow"></span>
-            <i [class]="s.icon"></i>
-            <div class="skill-level" *ngIf="s.level">
-              <div class="level-bar" [style.width.%]="s.level"></div>
-            </div>
-            <div class="tooltip">
-              {{ s.name }}
-            </div>
-          </button>
-        </div>
-      </div>
-
+﻿<section class="skills-section" id="skills" #skillsSection>
+  <div class="section-headline">
+    <div>
+      <span class="section-kicker">02 / Stack</span>
+      <h2 class="section-title">Stack de trabalho</h2>
     </div>
+    <p>
+      Tecnologias que aparecem nos meus projetos e na rotina de desenvolvimento: interfaces, APIs, dados, integração e operação.
+    </p>
+  </div>
+
+  <div class="category-filters" aria-label="Filtrar habilidades">
+    <button class="filter-pill" type="button" [class.active]="selectedCategory() === 'all'" (click)="filterByCategory('all')">Todas</button>
+    <button class="filter-pill" *ngFor="let category of skillCategories" type="button" [class.active]="selectedCategory() === category.name" (click)="filterByCategory(category.name)">
+      {{ category.name }}
+    </button>
+  </div>
+
+  <div class="category-grid">
+    <article class="category-card" *ngFor="let category of skillCategories; let i = index">
+      <span class="category-index">{{ i + 1 | number:'2.0' }}</span>
+      <h3>{{ category.name }}</h3>
+      <p>{{ category.description }}</p>
+      <strong>{{ category.skills.length }} tecnologias</strong>
+    </article>
+  </div>
+
+  <div class="icon-grid" aria-label="Lista de tecnologias">
+    <button class="icon-cell"
+            *ngFor="let skill of filteredIcons(); let i = index"
+            type="button"
+            (mouseenter)="onIconEnter(i)"
+            (mouseleave)="onIconLeave()"
+            [class.dimmed]="hoveredIndex() !== null && hoveredIndex() !== i">
+      <span class="skill-icon-box" aria-hidden="true"><i class="skill-icon" [ngClass]="skill.icon"></i></span>
+      <span>{{ skill.name }}</span>
+    </button>
   </div>
 </section>
+

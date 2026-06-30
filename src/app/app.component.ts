@@ -1,6 +1,5 @@
-import { Component } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
-import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
+﻿import { Component } from '@angular/core';
+import { NavigationEnd, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs/operators';
 
 @Component({
@@ -11,26 +10,22 @@ import { filter } from 'rxjs/operators';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = 'pedrobicas.dev';
   currentRoute = '/home';
 
-  constructor(private router: Router) {
+  constructor(private readonly router: Router) {
+    this.currentRoute = this.router.url || '/home';
     this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
-      .subscribe((event: NavigationEnd) => {
-        this.currentRoute = event.url;
+      .pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd))
+      .subscribe(event => {
+        this.currentRoute = event.urlAfterRedirects;
       });
   }
 
-  isResumeActive(): boolean {
-    return this.currentRoute === '/resume';
+  get isResumeActive(): boolean {
+    return this.currentRoute.startsWith('/resume');
   }
 
-  navigateToPortfolio(): void {
-    this.router.navigate(['/home']);
-  }
-
-  navigateToResume(): void {
-    this.router.navigate(['/resume']);
+  get isPortfolioActive(): boolean {
+    return this.currentRoute.startsWith('/home') || this.currentRoute === '/';
   }
 }

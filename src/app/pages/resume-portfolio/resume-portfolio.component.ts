@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+﻿import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 interface Skill {
@@ -47,17 +47,16 @@ export class ResumePortfolioComponent {
   about = {
     summary: 'Estudante de Engenharia de Software na FIAP e técnico em Análise e Desenvolvimento de Sistemas pelo SENAI, com base sólida em desenvolvimento de software.',
     highlights: [
-      'Bolsista no InCor desenvolvendo aplicações web e APIs RESTful',
+      'Aplicações web, APIs RESTful e dashboards em ambientes reais',
       'Experiência em Angular, ReactJS, Spring Boot e NodeJS',
       'Conhecimentos em bancos relacionais MySQL e PostgreSQL',
-      'Familiarizado com Git, Docker',
+      'Familiaridade com Git, Docker e rotina de versionamento',
       'Bolsa Mérito na FIAP e 3º lugar no desafio Next 2024',
-      'Proativo e dedicado ao crescimento profissional'
+      'Perfil focado em evolução técnica, clareza e consistência'
     ]
   };
 
   skills: Skill[] = [
-    // Frontend
     { name: 'Angular', category: 'frontend' },
     { name: 'ReactJS', category: 'frontend' },
     { name: 'React Native', category: 'frontend' },
@@ -68,20 +67,14 @@ export class ResumePortfolioComponent {
     { name: 'HTML5', category: 'frontend' },
     { name: 'CSS3', category: 'frontend' },
     { name: 'SCSS', category: 'frontend' },
-    
-    // Backend
     { name: 'Java Spring', category: 'backend' },
     { name: 'Spring Boot', category: 'backend' },
     { name: 'Node.js', category: 'backend' },
     { name: 'Java', category: 'backend' },
     { name: 'Python', category: 'backend' },
     { name: 'APIs RESTful', category: 'backend' },
-    
-    // Database
     { name: 'MySQL', category: 'database' },
     { name: 'PostgreSQL', category: 'database' },
-    
-    // DevOps & Others
     { name: 'Git', category: 'devops' },
     { name: 'GitHub', category: 'devops' },
     { name: 'Docker', category: 'devops' },
@@ -91,7 +84,7 @@ export class ResumePortfolioComponent {
 
   languages: Language[] = [
     { name: 'Português', level: 'Nativo' },
-    { name: 'Inglês', level: 'Basico' }
+    { name: 'Inglês', level: 'Básico' }
   ];
 
   experiences: Experience[] = [
@@ -122,27 +115,27 @@ export class ResumePortfolioComponent {
   ];
 
   projects: Project[] = [
-      {
+    {
       name: 'Postlocal',
-      description: 'Plataforma completa para geração de conteúdo para redes sociais com IA.',
+      description: 'Plataforma para geração de conteúdo para redes sociais com IA.',
       technologies: ['React', 'Node', 'JavaScript', 'Python'],
       link: 'https://github.com/pedrobicas/postlocal'
     },
     {
       name: 'Crypto Analysis Platform',
-      description: 'Plataforma completa para análise de criptomoedas com dados em tempo real, gráficos interativos e sistema de alertas personalizados.',
+      description: 'Plataforma para análise de criptomoedas com dados em tempo real, gráficos interativos e leitura visual de indicadores.',
       technologies: ['Python', 'Pandas', 'Matplotlib', 'Seaborn'],
       link: 'https://github.com/pedrobicas/crypto-platform'
     },
     {
       name: 'Real-time Chat Application',
-      description: 'Aplicação de chat em tempo real com salas privadas, compartilhamento de arquivos e notificações push.',
+      description: 'Aplicação de chat em tempo real com salas privadas, compartilhamento de arquivos e notificações.',
       technologies: ['React', 'Socket.io', 'Node.js', 'Express'],
       link: 'https://github.com/pedrobicas/realtime-chat'
     },
     {
       name: 'My Spotify Universe',
-      description: 'Dashboard personalizado conectado à API do Spotify para visualização de estatísticas musicais e descoberta de novas músicas.',
+      description: 'Dashboard conectado à API do Spotify para visualização de estatísticas musicais e descoberta de novas músicas.',
       technologies: ['React', 'API', 'Chart.js', 'Styled Components'],
       link: 'https://github.com/pedrobicas/my-spotify-universe'
     }

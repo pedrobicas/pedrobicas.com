@@ -1,127 +1,135 @@
-// Variáveis de tema - FUNDO PRETO GLOBAL
-
-:root {
-  --bg-primary: #000000;
-  --bg-secondary: #000000;
-  --text-primary: #e6f1ff;
-  --text-secondary: #7a8bbd;
-  --accent: #1c57af;
-  --accent-light: #1565c0;
-  --accent-rgb: 28, 87, 175;
-  --nav-height: 80px;
+﻿:root {
+  --bg-primary: #050b16;
+  --bg-secondary: #071426;
+  --surface: rgba(255, 255, 255, 0.055);
+  --surface-strong: rgba(255, 255, 255, 0.09);
+  --line: rgba(255, 255, 255, 0.14);
+  --text-primary: #e7f0ff;
+  --text-secondary: #a7b7d7;
+  --muted: #7282a0;
+  --accent: #2f6fb8;
+  --accent-light: #4f8ee8;
+  --accent-alt: #72a7ff;
+  --accent-rgb: 47, 111, 184;
+  --font-body: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-display: 'Space Grotesk', 'Plus Jakarta Sans', sans-serif;
+  --font-serif: 'Instrument Serif', Georgia, serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --nav-height: 76px;
 }
 
-// Reset e estilos globais
 * {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
 
 html {
-  scroll-behavior: smooth;
   width: 100%;
-  height: 100%;
+  min-height: 100%;
   overflow-x: hidden;
-  background: #000000 !important;
+  scroll-behavior: smooth;
+  background: var(--bg-primary);
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent) #101826;
 }
 
 body {
-  font-family: 'Montserrat', sans-serif;
-  background-color: #000000 !important;
-  background: #000000 !important;
-  color: var(--text-primary);
-  line-height: 1.6;
   width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
+  min-height: 100%;
   overflow-x: hidden;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  line-height: 1.5;
+  text-rendering: geometricPrecision;
+  font-feature-settings: 'ss01' 1, 'cv01' 1;
 }
 
-// SEÇÕES TRANSPARENTES PARA MOSTRAR O FUNDO DINÂMICO
-* {
-  &[class*="section"] {
-    background: transparent !important;
-  }
-}
-
-app-root, 
-.portfolio-page,
-.hero-section,
-.skills-section,
-.experience-section,
-.projects-section,
-.contact-section,
-section {
-  background: transparent !important;
-  background-color: transparent !important;
+::selection {
+  background: var(--accent);
+  color: #050b16;
 }
 
 a {
-  text-decoration: none;
   color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
 }
 
 button {
-  border: none;
-  background: none;
+  border: 0;
+  background: transparent;
   cursor: pointer;
-  font-family: inherit;
 }
 
-// Importar Font Awesome (adicionar no angular.json)
-@import '@fortawesome/fontawesome-free/css/all.min.css';
+img {
+  display: block;
+  max-width: 100%;
+}
 
-// Estilização da barra de rolagem
+app-root {
+  display: block;
+  min-height: 100vh;
+}
+
 ::-webkit-scrollbar {
-  width: 12px;
-  height: 0px; // Remove a barra de rolagem horizontal
+  width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #1a1a1a;
-  border-radius: 10px;
-  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3);
+  background: #101826;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(45deg, var(--accent), var(--accent-light));
-  border-radius: 10px;
-  border: 2px solid #1a1a1a;
-  transition: all 0.3s ease;
+  background: var(--accent);
+  border: 3px solid #101826;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(45deg, var(--accent-light), #2196f3);
-  box-shadow: 0 0 10px rgba(28, 87, 175, 0.5);
-  transform: scale(1.1);
+.section-title {
+  color: var(--text-primary);
 }
 
-::-webkit-scrollbar-thumb:active {
-  background: linear-gradient(45deg, #0d47a1, var(--accent));
+.highlight {
+  color: var(--accent);
+  font-family: var(--font-mono);
 }
 
-::-webkit-scrollbar-corner {
-  background: #1a1a1a;
-}
-
-// Para Firefox
-html {
-  scrollbar-width: thin;
-  scrollbar-color: var(--accent) #1a1a1a;
-  overflow-x: hidden !important; // Força remoção do scroll horizontal
-}
-
-body {
-  overflow-x: hidden !important; // Força remoção do scroll horizontal no body também
-}
-
-// Estilos do Swiper
-swiper-container {
-  padding: 20px 0;
-  
-  swiper-slide {
-    height: auto;
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 1ms !important;
   }
+}
+
+/* RESPONSIVE_POLISH_2026 */
+html,
+body {
+  max-width: 100%;
+}
+
+body,
+button,
+input,
+select,
+textarea {
+  overflow-wrap: break-word;
+}
+
+a,
+button,
+input,
+select,
+textarea {
+  min-width: 0;
 }

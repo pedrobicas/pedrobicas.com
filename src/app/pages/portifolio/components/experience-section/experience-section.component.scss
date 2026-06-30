@@ -1,304 +1,195 @@
-@import '../../portifolio.component.scss';
+﻿:host {
+  display: block;
+}
 
 .experience-section {
-  background: transparent;
-  padding: 1rem 0;
-  position: relative;
-  
-  .section-title {
-    font-size: 2.5rem;
-    text-align: center;
-    margin-bottom: 1.5rem;
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeInUp 0.8s ease forwards;
-    animation-delay: 0.2s;
+  display: grid;
+  gap: 1.4rem;
+}
+
+.section-headline {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(260px, 0.5fr);
+  gap: 2rem;
+  align-items: end;
+}
+
+.section-kicker {
+  color: var(--accent-alt);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3.6rem);
+  font-weight: 700;
+  line-height: 1.08;
+}
+
+.section-headline p {
+  color: var(--text-secondary);
+  font-size: 1.02rem;
+  line-height: 1.75;
+}
+
+.timeline-container {
+  display: grid;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.timeline-item {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr);
+  gap: 2rem;
+  padding: 1.9rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 520ms ease, transform 520ms ease;
+}
+
+.timeline-item.animate-in,
+.timeline-item:first-child {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.timeline-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+}
+
+.timeline-meta span {
+  color: var(--accent-alt);
+  font-weight: 700;
+}
+
+.timeline-meta strong {
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.experience-card {
+  display: grid;
+  gap: 1rem;
+}
+
+.experience-card h3 {
+  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 2.6vw, 2.05rem);
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.experience-card p {
+  max-width: 840px;
+  color: var(--text-secondary);
+  font-size: 1rem;
+  line-height: 1.78;
+}
+
+.detail-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  list-style: none;
+  background: rgba(79, 142, 232, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.detail-list li {
+  min-height: 92px;
+  padding: 1rem;
+  background: rgba(2, 7, 17, 0.9);
+  color: var(--text-primary);
+  font-size: 0.86rem;
+  font-weight: 600;
+  line-height: 1.55;
+}
+
+.tech-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.tech-item {
+  padding: 0.36rem 0.55rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+@media (max-width: 860px) {
+  .section-headline,
+  .timeline-item,
+  .detail-list {
+    grid-template-columns: 1fr;
   }
-  
-  .timeline-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 0 2rem;
-    position: relative;
-  }
-  
+
   .timeline-item {
-    margin-bottom: 1.5rem;
-    opacity: 0;
-    transform: translateY(30px) scale(0.95);
-    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-    
-    &:last-child {
-      margin-bottom: 0;
-    }
-    
-    // Animation only happens when animate-in class is added
-    &.animate-in {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-      
-      .experience-card {
-        animation: experienceSlideIn 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-      }
-    }
-  }
-  
-  .experience-card {
-    background: transparent;
-    border: 1px solid rgba(44, 131, 212, 0.2);
-    border-radius: 8px;
-    padding: 2rem;
-    transition: all 0.3s ease;
-    position: relative;
-    
-    &:hover {
-      border-color: rgba(44, 131, 212, 0.4);
-      background: rgba(44, 131, 212, 0.03);
-    }
-    
-    .card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 1rem;
-      flex-wrap: wrap;
-      gap: 1rem;
-      
-      .header-left {
-        flex: 1;
-        min-width: 0;
-      }
-      
-      .header-right {
-        display: flex;
-        gap: 0.5rem;
-        align-items: center;
-        flex-shrink: 0;
-      }
-    }
-    
-    .year-badge {
-      color: var(--accent);
-      font-size: 0.9rem;
-      font-weight: 500;
-      font-family: 'Fira Code', monospace;
-    }
-    
-    .type-badge {
-      color: var(--text-secondary);
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-    
-    .card-title {
-      font-size: 1.4rem;
-      font-weight: 600;
-      color: var(--text-primary);
-      margin-bottom: 0.5rem;
-      line-height: 1.3;
-    }
-    
-    .card-description {
-      color: var(--text-secondary);
-      line-height: 1.6;
-      margin-bottom: 1.5rem;
-      font-size: 1rem;
-    }
-    
-    .tech-stack {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      
-      .tech-item {
-        color: var(--text-secondary);
-        font-size: 0.85rem;
-        font-family: 'Fira Code', monospace;
-        
-        &:not(:last-child)::after {
-          content: '·';
-          margin-left: 0.5rem;
-          color: var(--accent);
-        }
-      }
-    }
-  }
-  
-  // Responsividade
-  @media (max-width: 768px) {
-    padding: 3rem 0;
-    
-    .timeline-container {
-      padding: 0 1rem;
-    }
-    
-    .experience-card {
-      padding: 1.5rem;
-      
-      .card-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.5rem;
-        
-        .header-right {
-          gap: 1rem;
-        }
-      }
-      
-      .card-title {
-        font-size: 1.2rem;
-      }
-    }
+    gap: 1rem;
   }
 
-  // Small screens (480px and below)
-  @media (max-width: 480px) {
-    padding: 2.5rem 0;
-    
-    .timeline-container {
-      padding: 0 0.75rem;
-    }
-    
-    .experience-card {
-      padding: 1rem;
-      margin-bottom: 1.25rem;
-      
-      .card-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.4rem;
-        margin-bottom: 1rem;
-        
-        .header-right {
-          gap: 0.75rem;
-          flex-wrap: wrap;
-        }
-      }
-      
-      .card-title {
-        font-size: 1.1rem;
-        line-height: 1.3;
-        margin-bottom: 0.5rem;
-      }
-      
-      .card-description {
-        font-size: 0.9rem;
-        line-height: 1.5;
-        margin-bottom: 1.25rem;
-      }
-      
-      .year-badge {
-        font-size: 0.85rem;
-      }
-      
-      .type-badge {
-        font-size: 0.75rem;
-      }
-      
-      .tech-stack {
-        gap: 0.4rem;
-        
-        .tech-item {
-          font-size: 0.8rem;
-        }
-      }
-    }
-  }
-
-  // Ultra small screens (360px and below)
-  @media (max-width: 360px) {
-    padding: 2rem 0;
-    
-    .timeline-container {
-      padding: 0 0.5rem;
-    }
-    
-    .experience-card {
-      padding: 0.75rem;
-      margin-bottom: 1rem;
-      
-      .card-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.3rem;
-        margin-bottom: 0.75rem;
-        
-        .header-right {
-          gap: 0.5rem;
-          flex-wrap: wrap;
-        }
-      }
-      
-      .card-title {
-        font-size: 1rem;
-        line-height: 1.2;
-        margin-bottom: 0.3rem;
-      }
-      
-      .card-description {
-        font-size: 0.85rem;
-        line-height: 1.4;
-        margin-bottom: 1rem;
-      }
-      
-      .year-badge {
-        font-size: 0.8rem;
-      }
-      
-      .type-badge {
-        font-size: 0.7rem;
-      }
-      
-      .tech-stack {
-        gap: 0.3rem;
-        
-        .tech-item {
-          font-size: 0.75rem;
-        }
-      }
-    }
-  }
-  
-}
-
-// Keyframes for experience animations
-@keyframes experienceSlideIn {
-  0% {
-    transform: translateX(-20px);
-    opacity: 0.8;
-    border-color: rgba(44, 131, 212, 0.1);
-  }
-  50% {
-    transform: translateX(5px);
-    border-color: rgba(44, 131, 212, 0.3);
-  }
-  100% {
-    transform: translateX(0);
-    opacity: 1;
-    border-color: rgba(44, 131, 212, 0.2);
+  .timeline-meta {
+    flex-direction: row;
+    justify-content: space-between;
   }
 }
 
-@keyframes fadeInUp {
-  0% {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
+/* RESPONSIVE_POLISH_2026 */
+.experience-section,
+.section-headline,
+.timeline-container,
+.timeline-item,
+.experience-card,
+.detail-list {
+  min-width: 0;
+}
+
+.experience-card p,
+.detail-list li,
+.tech-item {
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 980px) and (min-width: 861px) {
+  .detail-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-// Animações
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
+@media (max-width: 700px) {
+  .section-headline {
+    gap: 1rem;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+
+  .section-title {
+    font-size: clamp(1.75rem, 8vw, 2.45rem);
+  }
+
+  .section-headline p,
+  .experience-card p {
+    font-size: 0.95rem;
+    line-height: 1.62;
+  }
+
+  .timeline-meta {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .detail-list li {
+    min-height: auto;
   }
 }

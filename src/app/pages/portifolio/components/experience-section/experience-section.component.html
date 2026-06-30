@@ -1,33 +1,35 @@
-<section class="experience-section" id="experience">
-  <div class="section-content">
-    <div class="section-header">
-      <h2 class="section-title">
-        <span class="highlight">02.</span> Experiência
-      </h2>
+﻿<section class="experience-section" id="experience" #timelineContainer>
+  <div class="section-headline">
+    <div>
+      <span class="section-kicker">03 / Experiência</span>
+      <h2 class="section-title">Experiência e formação</h2>
     </div>
+    <p>
+      Atuação atual no INCOR com sistemas para pesquisa clínica, junto da formação técnica e acadêmica que sustenta os projetos deste portfólio.
+    </p>
+  </div>
 
-    <div class="timeline-container" #timelineContainer>
-      <div *ngFor="let experience of experiences; let i = index" 
-           class="timeline-item">
-        
-        <div class="experience-card">
-          <div class="card-header">
-            <div class="header-left">
-              <h3 class="card-title">{{ experience.title }}</h3>
-            </div>
-            <div class="header-right">
-              <div class="year-badge">{{ experience.year }}</div>
-              <div class="type-badge">{{ experience.type }}</div>
-            </div>
-          </div>
-          
-          <p class="card-description">{{ experience.description }}</p>
-          
-          <div class="tech-stack" *ngIf="experience.technologies && experience.technologies.length > 0">
-            <span class="tech-item" *ngFor="let tech of experience.technologies">{{ tech }}</span>
-          </div>
+  <div class="timeline-container">
+    <article class="timeline-item" *ngFor="let experience of experiences; let i = index" [class.animate-in]="isExperienceAnimated(i)">
+      <div class="timeline-meta">
+        <span>{{ experience.year }}</span>
+        <strong>{{ experience.type }}</strong>
+      </div>
+
+      <div class="experience-card">
+        <h3>{{ experience.title }}</h3>
+        <p>{{ experience.description }}</p>
+
+        <ul class="detail-list" *ngIf="experience.details?.length">
+          <li *ngFor="let detail of experience.details">{{ detail }}</li>
+        </ul>
+
+        <div class="tech-stack" *ngIf="experience.technologies?.length">
+          <span class="tech-item" *ngFor="let tech of experience.technologies">{{ tech }}</span>
         </div>
       </div>
-    </div>
+    </article>
   </div>
 </section>
+
+

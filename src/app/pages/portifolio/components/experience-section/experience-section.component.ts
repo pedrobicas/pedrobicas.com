@@ -1,5 +1,5 @@
-import { Component, Input, OnInit, AfterViewInit, ElementRef, ViewChild, ChangeDetectorRef, OnDestroy, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+﻿import { CommonModule } from '@angular/common';
+import { AfterViewInit, Component, ElementRef, Input, OnDestroy, ViewChild, signal } from '@angular/core';
 
 interface Experience {
   year: string;
@@ -7,7 +7,7 @@ interface Experience {
   description: string;
   type?: string;
   technologies?: string[];
-  icon?: string;
+  details?: string[];
 }
 
 @Component({
@@ -15,95 +15,56 @@ interface Experience {
   standalone: true,
   imports: [CommonModule],
   templateUrl: './experience-section.component.html',
-  styleUrls: ['./experience-section.component.scss'],
+  styleUrls: ['./experience-section.component.scss']
 })
-export class ExperienceSectionComponent implements OnInit, AfterViewInit, OnDestroy {
+export class ExperienceSectionComponent implements AfterViewInit, OnDestroy {
   @Input() experiences: Experience[] = [];
-  @ViewChild('timelineContainer') timelineContainer!: ElementRef;
+  @ViewChild('timelineContainer') timelineContainer!: ElementRef<HTMLElement>;
 
-  // Animation state
-  isVisible = signal<boolean>(false);
-  animatedExperiences = signal<Set<number>>(new Set());
+  isVisible = signal(false);
+  animatedIndexes = signal<Set<number>>(new Set());
   private observer?: IntersectionObserver;
-  private prefersReducedMotion: boolean = false;
-
-  constructor(private cdr: ChangeDetectorRef) {
-    this.prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  }
-
-  ngOnInit() {
-    // Initialization logic if needed
-  }
+  private timers: number[] = [];
 
   ngAfterViewInit(): void {
-    this.setupIntersectionObserver();
-    
-    // Listen for force refresh events from parent
-    if (this.timelineContainer?.nativeElement) {
-      this.timelineContainer.nativeElement.addEventListener('forceRefresh', () => {
-        this.forceRefresh();
-      });
-    }
-  }
+    const element = this.timelineContainer?.nativeElement ?? document.querySelector('.experience-section');
+    if (!element) return;
 
-  public forceRefresh(): void {
-    // Force visibility and re-initialize sequential animation
-    this.isVisible.set(true);
-    setTimeout(() => {
-      this.startSequentialAnimation();
-    }, 100);
-  }
-
-  private setupIntersectionObserver() {
-    const options = {
-      root: null,
-      rootMargin: '-10% 0px -10% 0px', // Trigger when 10% of the section is visible
-      threshold: 0.2
-    };
-
-    this.observer = new IntersectionObserver((entries) => {
+    this.observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
-        if (entry.isIntersecting && !this.isVisible()) {
+        if (entry.isIntersecting) {
           this.isVisible.set(true);
-          this.startSequentialAnimation();
+          this.revealItems();
+          entry.target.classList.add('is-visible');
         }
       });
-    }, options);
+    }, { rootMargin: '0px 0px -15% 0px', threshold: 0.18 });
 
-    // Observe the experience section element
-    const experienceSection = document.querySelector('.experience-section');
-    if (experienceSection) {
-      this.observer.observe(experienceSection);
-    }
+    this.observer.observe(element);
   }
 
-  private startSequentialAnimation() {
-    if (!this.isVisible() || this.prefersReducedMotion) return;
-
-    // Animate experiences one by one with delay
-    this.experiences.forEach((_, index) => {
-      setTimeout(() => {
-        const currentAnimated = this.animatedExperiences();
-        const newAnimated = new Set(currentAnimated);
-        newAnimated.add(index);
-        this.animatedExperiences.set(newAnimated);
-        
-        // Add animation class to the specific timeline item
-        const timelineItem = document.querySelector(`.timeline-item:nth-child(${index + 1})`);
-        if (timelineItem) {
-          timelineItem.classList.add('animate-in');
-        }
-      }, index * 300); // 300ms delay between each experience
-    });
+  ngOnDestroy(): void {
+    this.observer?.disconnect();
+    this.timers.forEach(timer => clearTimeout(timer));
   }
 
   isExperienceAnimated(index: number): boolean {
-    return this.animatedExperiences().has(index);
+    return this.animatedIndexes().has(index);
   }
 
-  ngOnDestroy() {
-    if (this.observer) {
-      this.observer.disconnect();
-    }
+  private revealItems(): void {
+    if (!this.isVisible()) return;
+
+    this.timers.forEach(timer => clearTimeout(timer));
+    this.timers = [];
+
+    this.experiences.forEach((_, index) => {
+      const timer = window.setTimeout(() => {
+        const current = new Set(this.animatedIndexes());
+        current.add(index);
+        this.animatedIndexes.set(current);
+      }, index * 180);
+      this.timers.push(timer);
+    });
   }
 }

@@ -1,277 +1,41 @@
-<!-- Minimalist Modern Terminal Button -->
-<div class="terminal-launcher" 
-     *ngIf="!isTerminalOpen"
-     (click)="openTerminal()"
-     (mouseenter)="onButtonHover(true)"
-     (mouseleave)="onButtonHover(false)"
-     [class.hovered]="buttonExpanded"
-     title="Terminal (Ctrl + `)">
-  
-  <!-- Button Core -->
-  <div class="launcher-core">
-    <div class="launcher-icon">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-        <path d="M7 15L12 10L17 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" transform="rotate(90 12 12)"/>
-        <path d="M13 17H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-      </svg>
-    </div>
-    
-    <!-- Ripple Effect -->
-    <div class="launcher-ripple"></div>
-    
-    <!-- Glow Effect -->
-    <div class="launcher-glow"></div>
-  </div>
-  
-  <!-- Minimal Tooltip -->
-  <div class="launcher-tooltip" [class.visible]="buttonExpanded">
-    <span class="tooltip-text">Terminal</span>
-    <div class="tooltip-shortcut">Ctrl + `</div>
-  </div>
-  
-  <!-- First Time Indicator -->
-  <div class="launcher-indicator" *ngIf="hasNotification"></div>
-</div>
+﻿<button class="terminal-launcher" type="button" *ngIf="!isTerminalOpen" (click)="openTerminal()" title="Terminal">
+  <span class="launcher-core">
+    <i class="fas fa-terminal" aria-hidden="true"></i>
+  </span>
+  <span class="launcher-tooltip">Terminal</span>
+</button>
 
-<!-- Floating Terminal Window -->
-<div class="floating-terminal-overlay" 
-     *ngIf="isTerminalOpen"
-     [class.entering]="isEntering"
-     [class.exiting]="isExiting">
-  
-  <div class="floating-terminal" 
-       #terminalContainer
-       [class.minimized]="isMinimized"
-       [class.fullscreen]="isFullscreen"
-       [class.dragging]="isDragging"
-       [style.left.px]="isFullscreen ? 0 : terminalX"
-       [style.top.px]="isFullscreen ? 0 : terminalY">
-    
-    <!-- Terminal Header -->
-    <div class="terminal-header" 
-         (mousedown)="startDrag($event)">
-      <div class="header-left">
-        <div class="terminal-controls">
-          <div class="control-dot close" (click)="closeTerminal()" title="Fechar"></div>
-          <div class="control-dot minimize" (click)="minimizeTerminal()" title="Minimizar"></div>
-          <div class="control-dot maximize" (click)="toggleFullscreen()" title="Maximizar"></div>
-        </div>
-        <div class="terminal-title">
-          <span class="title-icon">
-            <i class="fas fa-terminal"></i>
-          </span>
-          <span class="title-text">Pedro Terminal v3.0</span>
-          <span class="mode-indicator" [attr.data-mode]="currentMode">{{ currentMode.toUpperCase() }}</span>
-        </div>
+<section class="floating-terminal-overlay" *ngIf="isTerminalOpen" aria-label="Terminal do portfolio">
+  <div class="floating-terminal">
+    <header class="terminal-header">
+      <div class="terminal-title">
+        <i class="fas fa-terminal" aria-hidden="true"></i>
+        <span>Pedro Terminal</span>
       </div>
-      
-      <div class="header-right">
-        <div class="mode-switcher">
-          <button class="mode-btn" 
-                  [class.active]="currentMode === 'terminal'"
-                  (click)="switchMode('terminal')"
-                  title="Modo Terminal">
-            <i class="fas fa-code"></i>
-          </button>
-          <button class="mode-btn" 
-                  [class.active]="currentMode === 'portfolio'"
-                  (click)="switchMode('portfolio')"
-                  title="Modo Portfolio">
-            <i class="fas fa-briefcase"></i>
-          </button>
-          <button class="mode-btn" 
-                  [class.active]="currentMode === 'skills'"
-                  (click)="switchMode('skills')"
-                  title="Modo Skills">
-            <i class="fas fa-cogs"></i>
-          </button>
-          <button class="mode-btn" 
-                  [class.active]="currentMode === 'contact'"
-                  (click)="switchMode('contact')"
-                  title="Modo Contato">
-            <i class="fas fa-envelope"></i>
-          </button>
-        </div>
-        
-        <div class="window-controls">
-          <button class="window-btn" (click)="cycleTheme()" title="Alterar Tema">
-            <i class="fas fa-palette"></i>
-          </button>
-        </div>
-      </div>
-    </div>
+      <button class="window-btn" type="button" (click)="closeTerminal()" aria-label="Fechar terminal">
+        <i class="fas fa-xmark" aria-hidden="true"></i>
+      </button>
+    </header>
 
-    <!-- Terminal Body -->
-    <div class="terminal-body" *ngIf="!isMinimized">
-      
-      <!-- Welcome Screen -->
-      <div class="welcome-screen" *ngIf="showWelcome">
-        <div class="welcome-animation">
-          <div class="hologram-effect">
-            <pre class="ascii-art">{{ asciiLogos[currentMode] }}</pre>
-          </div>
-          <div class="welcome-info">
-            <h2 class="glitch-text" [attr.data-text]="personalInfo.name">{{ personalInfo.name }}</h2>
-            <p class="role-text">{{ personalInfo.role }}</p>
-            <div class="loading-bar">
-              <div class="loading-progress"></div>
-            </div>
-            <p class="loading-text">Inicializando sistema...</p>
-          </div>
+    <div class="terminal-body">
+      <div class="command-hints" *ngIf="!outputLines.length">
+        <button class="hint-item" type="button" *ngFor="let command of quickCommands" (click)="executeQuickCommand(command)">
+          {{ command }}
+        </button>
+      </div>
+
+      <div class="console-output">
+        <div class="output-line" *ngFor="let line of outputLines" [class]="line.type">
+          <span class="timestamp">{{ line.timestamp }}</span>
+          <span class="content">{{ line.content }}</span>
         </div>
       </div>
 
-      <!-- Interactive Tutorial (First Time) -->
-      <div class="interactive-tutorial" *ngIf="showTutorial && !showWelcome">
-        <div class="tutorial-content">
-          <h3>Bem-vindo ao Pedro Terminal!</h3>
-          <p>Este é um terminal interativo onde você pode explorar meu perfil profissional.</p>
-          
-          <div class="tutorial-steps">
-            <div class="tutorial-step" [class.active]="tutorialStep === 1">
-              <div class="step-number">1</div>
-              <div class="step-content">
-                <h4>Digite comandos</h4>
-                <p>Comece digitando <code>help</code> para ver todos os comandos</p>
-              </div>
-            </div>
-            
-            <div class="tutorial-step" [class.active]="tutorialStep === 2">
-              <div class="step-number">2</div>
-              <div class="step-content">
-                <h4>Use atalhos</h4>
-                <p><kbd>Tab</kbd> para auto-complete, <kbd>↑↓</kbd> para histórico</p>
-              </div>
-            </div>
-            
-            <div class="tutorial-step" [class.active]="tutorialStep === 3">
-              <div class="step-number">3</div>
-              <div class="step-content">
-                <h4>Explore livremente</h4>
-                <p>Comandos populares: <code>whoami</code>, <code>skills</code>, <code>contact</code></p>
-              </div>
-            </div>
-          </div>
-          
-          <div class="tutorial-actions">
-            <button class="tutorial-btn skip" (click)="skipTutorial()">Pular Tutorial</button>
-            <button class="tutorial-btn start" (click)="startTutorial()">Começar!</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Console Output -->
-      <div class="console-output" 
-           #consoleOutput
-           *ngIf="!showWelcome && !showTutorial">
-        
-        <!-- Command Suggestions Panel -->
-        <div class="suggestions-panel" *ngIf="showSuggestions && currentCommand.length > 0">
-          <div class="suggestions-title">Sugestões:</div>
-          <div class="suggestion-item" 
-               *ngFor="let suggestion of commandSuggestions" 
-               (click)="applySuggestion(suggestion)"
-               [class.highlighted]="suggestion.highlighted">
-            <span class="suggestion-command">{{ suggestion.command }}</span>
-            <span class="suggestion-desc">{{ suggestion.description }}</span>
-          </div>
-        </div>
-        
-        <div class="output-line" 
-             *ngFor="let line of outputLines; let i = index"
-             [class]="line.type"
-             [style.animation-delay]="(i * 50) + 'ms'">
-          
-          <div class="line-number">{{ i + 1 }}</div>
-          
-          <div class="line-content">
-            <span class="timestamp" *ngIf="line.type !== 'input'">{{ line.timestamp }}</span>
-            <span class="content" [innerHTML]="line.content"></span>
-          </div>
-          
-          <!-- Line effects -->
-          <div class="line-glow" *ngIf="line.type === 'success'"></div>
-          <div class="line-pulse" *ngIf="line.type === 'command'"></div>
-        </div>
-        
-        <!-- Processing indicator -->
-        <div class="processing-indicator" *ngIf="isProcessing">
-          <div class="processing-dots">
-            <span></span><span></span><span></span>
-          </div>
-          <span class="processing-text">Processando comando...</span>
-        </div>
-        
-        <!-- Command Hints -->
-        <div class="command-hints" *ngIf="showCommandHints && outputLines.length === 0">
-          <div class="hint-title">Comandos Populares:</div>
-          <div class="hint-grid">
-            <div class="hint-item" (click)="executeQuickCommand('whoami')">
-              <i class="fas fa-user"></i>
-              <span>whoami</span>
-            </div>
-            <div class="hint-item" (click)="executeQuickCommand('skills')">
-              <i class="fas fa-cogs"></i>
-              <span>skills</span>
-            </div>
-            <div class="hint-item" (click)="executeQuickCommand('projects')">
-              <i class="fas fa-briefcase"></i>
-              <span>projects</span>
-            </div>
-            <div class="hint-item" (click)="executeQuickCommand('contact')">
-              <i class="fas fa-envelope"></i>
-              <span>contact</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Terminal Footer -->
-      <div class="terminal-footer" *ngIf="!showWelcome">
-        <div class="footer-left">
-          <span class="connection-status">
-            <i class="fas fa-wifi"></i>
-            CONECTADO
-          </span>
-          <span class="mode-status">
-            Modo: {{ currentMode.toUpperCase() }}
-          </span>
-        </div>
-        
-        <div class="footer-right">
-          <span class="shortcut-hint">
-            Ctrl + ` para alternar | ESC para fechar
-          </span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Minimized State -->
-    <div class="minimized-content" *ngIf="isMinimized">
-      <div class="minimized-info">
-        <i class="fas fa-terminal"></i>
-        <span>Terminal Ativo</span>
-        <div class="activity-indicator"></div>
-      </div>
-    </div>
-
-    <!-- Resize handles -->
-    <div class="resize-handles" *ngIf="!isFullscreen && !isMinimized">
-      <div class="resize-handle top"></div>
-      <div class="resize-handle right"></div>
-      <div class="resize-handle bottom"></div>
-      <div class="resize-handle left"></div>
-      <div class="resize-handle top-left"></div>
-      <div class="resize-handle top-right"></div>
-      <div class="resize-handle bottom-left"></div>
-      <div class="resize-handle bottom-right"></div>
+      <form class="terminal-footer" (ngSubmit)="executeCommand()">
+        <span>pedro@portfolio:~$</span>
+        <input type="text" name="command" [(ngModel)]="currentCommand" autocomplete="off" aria-label="Comando do terminal">
+      </form>
     </div>
   </div>
-</div>
+</section>
 
-<!-- Background Effects -->
-<div class="terminal-background-effects" *ngIf="isTerminalOpen">
-  <div class="matrix-rain"></div>
-  <div class="circuit-lines"></div>
-  <div class="floating-particles"></div>
-</div>

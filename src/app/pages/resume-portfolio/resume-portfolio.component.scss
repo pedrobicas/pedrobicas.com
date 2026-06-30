@@ -1,4 +1,4 @@
-:host {
+﻿:host {
   display: block;
   min-height: 100vh;
   background: #000000;
@@ -725,5 +725,70 @@
 
   .title {
     color: rgba(255, 255, 255, 0.9) !important;
+  }
+}
+/* RESPONSIVE_POLISH_2026 */
+.resume-container,
+.resume-content,
+.sidebar,
+.main-content,
+.contact-info,
+.project-item,
+.experience-item,
+.education-item {
+  min-width: 0;
+}
+
+.resume-container {
+  width: min(calc(100% - 2rem), 1200px);
+  margin: clamp(1rem, 3vw, 2rem) auto 5rem;
+}
+
+.contact-item,
+.about-summary,
+.highlight-item,
+.project-description,
+.experience-description,
+.tech-tag,
+.skill-tag {
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 768px) {
+  .resume-container {
+    width: min(calc(100% - 1.4rem), 1200px);
+    margin: 0.7rem auto 5rem;
+  }
+
+  .resume-header .name {
+    font-size: clamp(2rem, 12vw, 2.8rem);
+  }
+
+  .resume-header .contact-info {
+    width: 100%;
+  }
+
+  .experience-item .experience-meta,
+  .education-item .education-meta {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .resume-header,
+  .sidebar,
+  .main-content {
+    padding-inline: 0.9rem;
+  }
+
+  .project-item {
+    padding: 1rem;
+  }
+
+  .skill-tag,
+  .tech-tag {
+    max-width: 100%;
   }
 }

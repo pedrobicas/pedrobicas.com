@@ -1,34 +1,16 @@
+﻿<main class="app-shell">
+  <nav class="app-switcher" aria-label="Alternar areas do site">
+    <a routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="switcher-link">
+      <i class="fas fa-sitemap" aria-hidden="true"></i>
+      <span>Portfólio</span>
+    </a>
+    <a routerLink="/resume" routerLinkActive="active" class="switcher-link">
+      <i class="fas fa-file-lines" aria-hidden="true"></i>
+      <span>Currículo</span>
+    </a>
+  </nav>
 
-<!-- Navigation -->
-<div class="portfolio-switcher">
-  <div class="switcher-container">
-    <div class="switcher-track">
-      <div class="switcher-thumb" [class.resume-active]="isResumeActive()"></div>
-    </div>
-    <div class="switcher-options">
-      <button 
-        class="switcher-option" 
-        [class.active]="!isResumeActive()"
-        (click)="navigateToPortfolio()"
-        title="Portfólio Interativo"
-        aria-label="Navegar para o portfólio interativo">
-        <i class="fas fa-rocket" aria-hidden="true"></i>
-        <span class="option-text">Portfólio</span>
-      </button>
-      <button 
-        class="switcher-option" 
-        [class.active]="isResumeActive()"
-        (click)="navigateToResume()"
-        title="Currículo Profissional"
-        aria-label="Navegar para o currículo profissional">
-        <i class="fas fa-file-alt" aria-hidden="true"></i>
-        <span class="option-text">Currículo</span>
-      </button>
-    </div>
+  <div class="app-frame">
+    <router-outlet></router-outlet>
   </div>
-</div>
-
-<main class="main-content">
-  <router-outlet></router-outlet>
 </main>
-

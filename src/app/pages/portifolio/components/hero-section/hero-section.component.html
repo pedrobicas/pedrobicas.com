@@ -1,33 +1,83 @@
-<div class="hero-content" id="home">
-  <div class="hero-text">
-    <div class="name-container">
-      <span class="minimal-greeting">Olá, eu sou</span>
-      <h1 class="name-animated-alt">
-        <span class="first-name">
-          <span class="letter" *ngFor="let l of firstNameLetters; let i = index" [style.animationDelay]="(i * 0.08)+'s'">{{l}}</span>
-        </span>
-        <span class="name-space"> </span>
-        <span class="last-name">
-          <span class="letter accent" *ngFor="let l of lastNameLetters; let i = index" [style.animationDelay]="((i+firstNameLetters.length+1) * 0.08)+'s'">{{l}}</span>
-        </span>
-      </h1>
-    </div>
-    <div class="title-container">
-      <h2 class="gradient-role">{{role}}</h2>
-    </div>
-    <div class="intro-cta">
+﻿<div class="hero-content" id="home">
+  <div class="hero-copy">
+    <p class="eyebrow"><span></span>Portfólio dev / projetos e sistemas web</p>
+
+    <h1 class="hero-title hero-name" [attr.aria-label]="name">{{ name }}</h1>
+
+    <h2 class="hero-role">{{ role }}</h2>
+
+    <p class="hero-lead">
+      Portfólio com interfaces, APIs, dashboards e experimentos de produto. Reúne projetos autorais e entregas técnicas para mostrar como estruturo soluções web do front ao back-end.
+    </p>
+
+    <div class="hero-actions">
       <ng-content select=".cta-btn"></ng-content>
-      <div class="social-circuit">
-        <a *ngFor="let social of socialLinks" [href]="social.url" class="circuit-node" [attr.aria-label]="social.label" target="_blank">
-          <i [class]="social.icon"></i>
-          <div class="circuit-line"></div>
-        </a>
+      <a *ngFor="let social of socialLinks" [href]="social.url" class="social-link" [attr.aria-label]="social.label" target="_blank" rel="noopener noreferrer">
+        <i [class]="social.icon" aria-hidden="true"></i>
+        <span>{{ social.label }}</span>
+      </a>
+    </div>
+  </div>
+
+  <aside class="hero-visual" aria-label="Mapa de trabalho do portfolio">
+    <div class="visual-frame">
+      <div class="orbital-field" aria-hidden="true">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <div class="work-card main-card">
+        <div class="card-head">
+          <span>perfil técnico</span>
+          <strong>Produto web + projetos autorais</strong>
+        </div>
+
+        <div class="index-list">
+          <div>
+            <span>01</span>
+            <strong>Sistemas web</strong>
+            <small>interfaces, APIs e dashboards</small>
+          </div>
+          <a href="https://studio.pedrobicas.dev" target="_blank" rel="noopener noreferrer">
+            <span>02</span>
+            <strong>Pedro Bicas Studio</strong>
+            <small>hub comercial publicado</small>
+          </a>
+          <div>
+            <span>03</span>
+            <strong>Projetos técnicos</strong>
+            <small>dados, realtime e integrações</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="work-card status-card">
+        <span class="status-dot"></span>
+        <div>
+          <small>direção atual</small>
+          <strong>Produto web, interfaces e integrações</strong>
+        </div>
+      </div>
+
+      <div class="spec-card">
+        <span>front</span>
+        <strong>componentes, estado, responsividade</strong>
+      </div>
+      <div class="spec-card alt">
+        <span>back</span>
+        <strong>APIs, banco, autenticação, deploy</strong>
       </div>
     </div>
-  </div>
-  <div class="hero-image">
-    <div class="avatar-container">
-      <img [src]="avatar" [alt]="name" class="avatar">
+
+    <div class="stack-marquee" aria-label="Tecnologias principais">
+      <div>
+        <span>Angular</span><span>React</span><span>TypeScript</span><span>Java</span><span>Spring</span><span>Python</span><span>Django</span><span>Node</span><span>PostgreSQL</span>
+        <span>Angular</span><span>React</span><span>TypeScript</span><span>Java</span><span>Spring</span><span>Python</span><span>Django</span><span>Node</span><span>PostgreSQL</span>
+      </div>
     </div>
-  </div>
+  </aside>
 </div>
+
+
+
