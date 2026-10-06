@@ -1,0 +1,8 @@
+node_modules
+dist
+playwright-report
+test-results
+coverage
+src/styles.css
+public/og.png
+public/portfolio-preview.png
