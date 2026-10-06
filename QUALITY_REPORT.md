@@ -38,3 +38,12 @@ npm run verify
 ```
 
 O primeiro comando gera o `package-lock.json`. Depois de `npm run verify` passar, versione o lockfile antes de tornar o repositório público.
+
+## Correções da revisão 2.0.3
+
+- Loader passa a ser removido efetivamente da interação com `display: none` ao terminar, evitando uma camada invisível interceptando o ponteiro.
+- Rotas internas (`#/projetos`, `#/projetos/<slug>` e `#/curriculo`) são resolvidas imediatamente no bootstrap e não exibem o loader da home.
+- Cursor customizado recalcula o elemento sob o ponteiro após trocas de modo, abertura/fechamento de detalhes e remoção do loader, evitando labels obsoletos como `pular`.
+- Adicionado teste E2E específico para acesso direto e refresh em galeria e detalhe de projeto.
+- Removidas as mensagens de disponibilidade para vagas/freelas e o atalho `sudo contratar` do terminal.
+- CSS visual principal permanece inalterado.

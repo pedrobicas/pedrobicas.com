@@ -59,3 +59,30 @@ test('não registra erros JavaScript durante o fluxo principal', async ({ page }
 
   expect(errors).toEqual([]);
 });
+
+
+test('refresh direto em projetos e detalhes não prende o loader nem o cursor', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+
+  for (const route of ['/#/projetos', '/#/projetos/crypto-analysis']) {
+    await page.goto(route);
+    await expect(page.locator('#galeria')).toBeVisible();
+    await expect(page.locator('.loader')).toBeHidden();
+    await expect(page.locator('html')).toHaveAttribute('data-mode', 'projetos');
+
+    if (route.includes('crypto-analysis')) {
+      await expect(page.locator('#detalhe')).toBeVisible();
+      await expect(page.locator('#d-name')).toHaveText('Crypto Analysis');
+    }
+
+    await page.mouse.move(320, 220);
+    await expect(page.locator('.cursor-label')).not.toHaveText('pular');
+
+    await page.reload();
+    await expect(page.locator('#galeria')).toBeVisible();
+    await expect(page.locator('.loader')).toBeHidden();
+    await expect(page.locator('html')).toHaveAttribute('data-mode', 'projetos');
+    await page.mouse.move(360, 260);
+    await expect(page.locator('.cursor-label')).not.toHaveText('pular');
+  }
+});

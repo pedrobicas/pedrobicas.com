@@ -41,6 +41,7 @@ export function setupNavigation(ctx) {
       else { lenis?.stop(); pages[nextMode].scrollTop = 0; }
       if (nextMode === 'projetos') ctx.gallery.galleryEnter();
       ctx.gallery.updateLive();
+      ctx.cursor?.refreshState?.();
       options.then?.();
       if (detail.hidden) {
         if (nextMode === 'cv') $('#cv-title').focus({ preventScroll: true });

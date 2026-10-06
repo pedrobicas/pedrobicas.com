@@ -9,7 +9,6 @@ export default function Hero() {
       <div className="hero-meta">
         <div>
           <p className="tagline">Desenvolvedor full-stack. Faço a API, o banco de dados e a interface que as pessoas usam.</p>
-          <p className="status"><i aria-hidden="true"></i>Aberto a vagas e freelas</p>
         </div>
         <a className="scroll-cue" href="#sobre" aria-label="Ir para a seção Sobre"><span aria-hidden="true">role</span><i aria-hidden="true"></i></a>
         <div className="byte" aria-hidden="true">

@@ -9,6 +9,30 @@ export function setupCursor(ctx) {
   let ringX = -100;
   let ringY = -100;
 
+  function updateCursorState(target) {
+    if (!target || !(target instanceof Element)) {
+      cursor.classList.remove('is-text', 'is-label', 'is-hover', 'on-blue');
+      label.textContent = '';
+      return;
+    }
+    const labelled = target.closest('[data-cursor]');
+    const hoverable = target.closest('a,button');
+    const text = target.closest('input,.term-out');
+    cursor.classList.toggle('is-text', Boolean(text));
+    cursor.classList.toggle('is-label', Boolean(labelled) && !text);
+    cursor.classList.toggle('is-hover', !labelled && Boolean(hoverable) && !text);
+    cursor.classList.toggle('on-blue', Boolean(target.closest('.contact')));
+    label.textContent = labelled ? labelled.dataset.cursor : '';
+  }
+
+  function refreshState() {
+    if (!finePointer || reduce || !state.ptr.active) {
+      updateCursorState(null);
+      return;
+    }
+    updateCursorState(document.elementFromPoint(state.ptr.x, state.ptr.y));
+  }
+
   if (finePointer && !reduce) {
     root.classList.add('has-cursor');
     onTick((dt) => {
@@ -18,17 +42,7 @@ export function setupCursor(ctx) {
       dot.style.transform = `translate3d(${state.ptr.x}px,${state.ptr.y}px,0)`;
       ring.style.transform = `translate3d(${ringX.toFixed(1)}px,${ringY.toFixed(1)}px,0)`;
     });
-    on(document, 'pointerover', (event) => {
-      const target = event.target;
-      const labelled = target.closest('[data-cursor]');
-      const hoverable = target.closest('a,button');
-      const text = target.closest('input,.term-out');
-      cursor.classList.toggle('is-text', Boolean(text));
-      cursor.classList.toggle('is-label', Boolean(labelled) && !text);
-      cursor.classList.toggle('is-hover', !labelled && Boolean(hoverable) && !text);
-      cursor.classList.toggle('on-blue', Boolean(target.closest('.contact')));
-      label.textContent = labelled ? labelled.dataset.cursor : '';
-    });
+    on(document, 'pointerover', (event) => updateCursorState(event.target));
     on(document.documentElement, 'pointerleave', () => cursor.classList.add('is-out'));
     on(document.documentElement, 'pointerenter', () => cursor.classList.remove('is-out'));
   }
@@ -53,6 +67,6 @@ export function setupCursor(ctx) {
     document.querySelectorAll('[data-magnetic]').forEach(magneticHandlers);
   }
   refreshMagnetics();
-  ctx.cursor = { refreshMagnetics };
+  ctx.cursor = { refreshMagnetics, refreshState };
   return ctx.cursor;
 }
