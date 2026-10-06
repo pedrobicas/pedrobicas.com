@@ -25,7 +25,6 @@ export default function About() {
             <button type="button" data-cmd="whoami">whoami</button>
             <button type="button" data-cmd="stack">stack</button>
             <button type="button" data-cmd="projetos">projetos</button>
-            <button type="button" data-cmd="sudo contratar">sudo contratar</button>
           </div>
         </div>
       </div>

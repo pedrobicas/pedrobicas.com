@@ -204,6 +204,7 @@ export function setupGallery(ctx, live) {
     typography.fitOne(name, 110);
     live.setLive(cover, true);
     ctx.cursor?.refreshMagnetics?.();
+    ctx.cursor?.refreshState?.();
     if (anim && !instant) {
       if (!wasOpen) {
         gsap.fromTo(backdrop, { opacity: 0 }, { opacity: 1, duration: 0.5, ease: 'power2.out', overwrite: true });
@@ -224,6 +225,7 @@ export function setupGallery(ctx, live) {
       live.setLive($('.d-cover'), false);
       const link = from && gallery.querySelector(`[data-slug="${from}"] .g-link`);
       if (link && state.mode === 'projetos') link.focus({ preventScroll: true });
+      ctx.cursor?.refreshState?.();
     };
     if (anim && !instant) {
       gsap.to(backdrop, { opacity: 0, duration: 0.45, ease: 'power2.in', overwrite: true });

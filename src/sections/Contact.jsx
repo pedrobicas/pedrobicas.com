@@ -5,7 +5,7 @@ export default function Contact() {
     <section className="contact" id="contato" aria-labelledby="contato-t">
       <p className="path" aria-hidden="true">~/contato</p>
       <h2 className="contact-title" id="contato-t" data-split data-w="130">Bora conversar?</h2>
-      <p className="contact-note">Estou aberto a vagas, freelas e projetos em que eu aprenda algo novo. Respondo por email ou pelo LinkedIn.</p>
+      <p className="contact-note">Respondo por email ou pelo LinkedIn.</p>
       <div className="email-wrap">
         <button type="button" className="email-big" data-cursor="copiar" data-magnetic=".06"><span className="sr-only">Copiar o email </span>{EMAIL}</button>
         <canvas className="contact-wire" aria-hidden="true"></canvas>

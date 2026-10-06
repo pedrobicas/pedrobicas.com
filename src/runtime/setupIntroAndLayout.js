@@ -10,13 +10,27 @@ export function setupIntroAndLayout(ctx) {
     const loader = $('.loader');
     if (!loader) return;
     const { chars, wire, renderChars } = ctx.hero;
-    if (!anim) {
-      loader.hidden = true;
+    const revealHero = () => {
       chars.forEach((char) => { char.intro = 1; });
       renderChars();
+    };
+    const hideLoader = () => {
+      loader.hidden = true;
+      loader.style.display = 'none';
+      ctx.cursor?.refreshState?.();
+    };
+
+    // Rotas internas devem abrir diretamente no conteúdo solicitado.
+    // Além de ser mais rápido, isso evita que o loader invisível continue
+    // interceptando o ponteiro após um refresh em #/projetos.
+    if (!anim || ctx.state.mode !== 'portfolio') {
+      revealHero();
+      hideLoader();
       return;
     }
+
     loader.hidden = false;
+    loader.style.removeProperty('display');
     lenis?.stop();
     const seen = sessionStore.get('pb-boot');
     const top = $('.loader-top');
@@ -25,7 +39,7 @@ export function setupIntroAndLayout(ctx) {
     const count = $('.loader-count');
     introTimeline = gsap.timeline({
       onComplete() {
-        loader.hidden = true;
+        hideLoader();
         if (lenis && ctx.state.mode === 'portfolio') lenis.start();
         sessionStore.set('pb-boot', '1');
         ScrollTrigger.refresh();
@@ -90,13 +104,18 @@ export function setupIntroAndLayout(ctx) {
   addCleanup(() => clearTimeout(resizeTimer));
   addCleanup(() => { cancelled = true; introTimeline?.kill(); });
 
+  const initialRoute = ctx.navigation.parseRoute(location.hash);
+  const opensInternalRoute = initialRoute.mode !== 'portfolio';
+  if (opensInternalRoute) {
+    ctx.navigation.applyRoute(initialRoute, { instant: true });
+    runIntro();
+  }
+
   const fontsReady = document.fonts?.ready || Promise.resolve();
   Promise.race([fontsReady, new Promise((resolve) => setTimeout(resolve, 2500))]).then(() => {
     if (cancelled) return;
     layoutAll();
-    const initialRoute = ctx.navigation.parseRoute(location.hash);
-    if (initialRoute.mode !== 'portfolio') ctx.navigation.applyRoute(initialRoute, { instant: true });
-    runIntro();
+    if (!opensInternalRoute) runIntro();
   });
 
   ctx.layout = { layoutAll, runIntro };

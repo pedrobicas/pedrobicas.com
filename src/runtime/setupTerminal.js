@@ -73,7 +73,7 @@ export function setupTerminal(ctx) {
       case 'linkedin': print(link('linkedin.com/in/pedrobicas', 'https://linkedin.com/in/pedrobicas')); break;
       case 'curriculo': case 'cv': case 'resume': print('abrindo o currículo'); timeout(() => ctx.go?.('#/curriculo'), 300); break;
       case 'cafe': case 'coffee': coffees += 1; print(`    ( (\n     ) )\n  ........\n  |      |]\n  \\      /\n   \`----´\ncafé nº ${coffees} do dia. compilando mais rápido.`); break;
-      case 'sudo': if (arg.startsWith('contrat')) { print('permissão concedida. abrindo ~/contato', 'hl'); goTo('contato'); } else print('pedro não está no arquivo sudoers. este incidente será reportado. (brincadeira)'); break;
+      case 'sudo': print('pedro não está no arquivo sudoers. este incidente será reportado. (brincadeira)'); break;
       case 'rm': print('boa tentativa. este portfólio é somente leitura.'); break;
       case 'exit': case 'sair': print('não dá pra sair agora, o café ainda está quente.'); break;
       case 'oi': case 'ola': case 'hello': case 'hi': print('oi! digite help para ver o que dá para fazer aqui.'); break;
