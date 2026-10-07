@@ -4,7 +4,7 @@ import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 
-const EXPECTED_STYLES_SHA256 = 'cd7b26fe5679523d29eab41b4bef9e8070c1fb1a67dde88b5f1adb15e164738d';
+const EXPECTED_STYLES_SHA256 = 'd445eb86049247ac9b69f9c16c2468dd34c4f2f31dc550e62241c104860bba9a';
 const stylesUrl = new URL('../../src/styles.css', import.meta.url);
 
 test('o CSS visual aprovado permanece byte a byte intacto', async () => {

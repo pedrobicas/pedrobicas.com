@@ -48,6 +48,28 @@ test('abre e fecha detalhes de um projeto', async ({ page }) => {
   await expect(page.locator('#detalhe')).toBeHidden();
 });
 
+test('cada rota de projeto mostra apenas os dados do projeto correto', async ({ page }) => {
+  await page.goto('/#/projetos/my-spotify-universe');
+
+  await expect(page.locator('#detalhe')).toBeVisible();
+  await expect(page.locator('#d-name')).toHaveText('My Spotify Universe');
+  await expect(page.locator('.d-desc')).toContainText('Spotify');
+  await expect(page.locator('.d-desc')).not.toContainText('CoinGecko');
+  await expect(page.locator('.d-stack')).toContainText('React');
+  await expect(page.locator('.d-stack')).not.toContainText('Streamlit');
+  await expect(page.locator('.d-cover [data-project-visual]:not([hidden])')).toHaveCount(1);
+
+  await page.goto('/#/projetos/faxina');
+  await expect(page.locator('#d-name')).toHaveText('Faxina');
+  await expect(page.locator('.d-desc')).toContainText('armazenamento');
+  await expect(page.locator('.d-stack')).toContainText('Python');
+
+  await page.goto('/#/projetos/stack10');
+  await expect(page.locator('#d-name')).toHaveText('STACK10');
+  await expect(page.locator('.d-desc')).toContainText('120 Hz');
+  await expect(page.locator('.d-stack')).toContainText('Canvas 2D');
+});
+
 test('não registra erros JavaScript durante o fluxo principal', async ({ page }) => {
   const errors = [];
   const modeSwitch = page.locator('.switch');

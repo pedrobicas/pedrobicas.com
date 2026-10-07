@@ -271,7 +271,17 @@ function WireVisual({ project, uid }) {
   );
 }
 
+function ImageVisual({ project }) {
+  return (
+    <figure className="project-shot" data-project-visual={project.slug}>
+      <img src={project.image} alt="" loading="lazy" decoding="async" />
+      <span className="project-shot-scan" aria-hidden="true"></span>
+    </figure>
+  );
+}
+
 export function ProjectVisualContent({ project, uid = project.slug }) {
+  if (project.viz === 'image' && project.image) return <ImageVisual project={project} />;
   if (project.viz === 'crypto') return <CryptoVisual project={project} />;
   if (project.viz === 'universe') return <UniverseVisual project={project} />;
   if (project.viz === 'chat') return <ChatVisual project={project} />;

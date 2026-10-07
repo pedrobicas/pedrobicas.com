@@ -9,4 +9,4 @@ export const SECTION_LINKS = [
   ['contato', 'Contato'],
 ];
 
-export const AREAS = { web: 'Web', 'dados-ia': 'Dados e IA' };
+export const AREAS = { web: 'Web', 'dados-ia': 'Dados e IA', games: 'Game / Engine', ferramentas: 'Ferramentas' };

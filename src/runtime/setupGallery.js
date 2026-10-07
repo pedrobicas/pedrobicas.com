@@ -1,4 +1,5 @@
 import { PROJECTS } from '../data/projects.js';
+import { AREAS } from '../data/site.js';
 import { clamp, lerp } from '../utils/math.js';
 import { localStore } from '../utils/storage.js';
 import { pad2 } from '../utils/text.js';
@@ -39,14 +40,8 @@ export function setupGallery(ctx, live) {
       visual.style.display = hidden ? 'none' : '';
     });
   }
-  function showProjectDetail(slug) {
-    $$('[data-project-detail]', detail).forEach((body) => {
-      body.hidden = body.dataset.projectDetail !== slug;
-    });
-  }
   showProjectVisual(previewVisual, null);
   showProjectVisual($('.d-cover', detail), null);
-  showProjectDetail(null);
   live.pauseSmil(previewVisual);
   live.pauseSmil(detail);
   function updateLive() {
@@ -183,7 +178,33 @@ export function setupGallery(ctx, live) {
     const cover = $('.d-cover');
     live.setLive(cover, false);
     showProjectVisual(cover, project.slug);
-    showProjectDetail(project.slug);
+    $('.d-desc').textContent = project.desc;
+    const highlights = project.highlights || [];
+    $('.d-hl').replaceChildren(...highlights.map((highlight) => {
+      const item = document.createElement('li');
+      item.textContent = highlight;
+      return item;
+    }));
+    $('.d-hl-wrap').hidden = highlights.length === 0;
+    $('.d-stack').replaceChildren(...project.stack.map((technology) => {
+      const item = document.createElement('li');
+      item.textContent = technology;
+      return item;
+    }));
+    $('.d-areas').textContent = project.areas.map((area) => AREAS[area] || area).join(', ');
+    const links = $('.d-links');
+    links.replaceChildren(...project.links.map((link) => {
+      const anchor = document.createElement('a');
+      anchor.className = `pill${link.demo ? ' solid' : ''}`;
+      anchor.href = link.href;
+      anchor.target = '_blank';
+      anchor.rel = 'noopener noreferrer';
+      anchor.dataset.cursor = link.demo ? 'demo' : 'código';
+      anchor.dataset.magnetic = '.25';
+      anchor.textContent = link.label;
+      return anchor;
+    }));
+    links.hidden = project.links.length === 0;
     $('[data-prev]').href = `#/projetos/${previous.slug}`;
     $('[data-next]').href = `#/projetos/${next.slug}`;
     $('.d-next').href = `#/projetos/${next.slug}`;
