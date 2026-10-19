@@ -1,6 +1,6 @@
 # Pedro Bicas — Portfólio
 
-[![CI](https://github.com/pedrobicas/pedrobicas.dev/actions/workflows/ci.yml/badge.svg)](https://github.com/pedrobicas/pedrobicas.dev/actions/workflows/ci.yml)
+[![CI](https://github.com/pedrobicas/pedrobicas.com/actions/workflows/ci.yml/badge.svg)](https://github.com/pedrobicas/pedrobicas.com/actions/workflows/ci.yml)
 
 Portfólio pessoal de Pedro Bicas, desenvolvido com React + Vite e uma camada visual baseada em GSAP, Lenis, Canvas e SVG. A implementação prioriza duas coisas ao mesmo tempo: preservar a experiência visual original e manter uma arquitetura de código clara, modular e testável.
 
