@@ -9,7 +9,7 @@
   "homepage": "https://pedrobicas.com",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/pedrobicas/pedrobicas.dev.git"
+    "url": "git+https://github.com/pedrobicas/pedrobicas.com.git"
   },
   "engines": {
     "node": "^22.13.0 || >=24.0.0"
