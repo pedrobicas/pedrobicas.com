@@ -71,7 +71,7 @@ export const PROJECTS = [
     desc: 'O portfólio que você está vendo: um sinal digital transmite meu nome em binário, e o resto do site é animado com GSAP e scroll suave.',
     highlights: ['Nome transmitido em binário num canvas, letra por letra', 'Rolagem horizontal, títulos que esticam com fonte variável e um terminal interativo', 'Respeita a preferência do sistema por menos movimento'],
     stack: ['React', 'Vite', 'JavaScript', 'GSAP', 'Lenis', 'Canvas'],
-    links: [{ label: 'Ver código', href: 'https://github.com/pedrobicas/pedrobicas.dev' }],
+    links: [{ label: 'Ver código', href: 'https://github.com/pedrobicas/pedrobicas.com' }],
   },
 ];
 
