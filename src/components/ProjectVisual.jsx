@@ -38,13 +38,9 @@ function CryptoVisual({ project }) {
   const step = (x1 - x0) / (n + 7);
   const y = (value) => Number((y1 - ((value - min) / (max - min)) * (y1 - y0)).toFixed(1));
   const lastX = x0 + step * (n - 0.5);
-  const points = [[lastX, price]].concat(
-    forecast.map((value, index) => [lastX + step * (index + 1), value]),
-  );
+  const points = [[lastX, price]].concat(forecast.map((value, index) => [lastX + step * (index + 1), value]));
   const upper = points.map(([px, value], index) => `${px.toFixed(1)},${y(value + index * 1.6 + 1)}`);
-  const lower = points
-    .map(([px, value], index) => `${px.toFixed(1)},${y(value - index * 1.6 - 1)}`)
-    .reverse();
+  const lower = points.map(([px, value], index) => `${px.toFixed(1)},${y(value - index * 1.6 - 1)}`).reverse();
 
   return (
     <svg
@@ -57,8 +53,12 @@ function CryptoVisual({ project }) {
         const gridY = y0 + (index * (y1 - y0)) / 4;
         return <line className="vz-grid" x1={x0} x2={x1} y1={gridY} y2={gridY} key={gridY} />;
       })}
-      <text className="vz-label" x={x0} y="52">BTC/USD</text>
-      <text className="vz-label vz-accent" x={x1} y="52" textAnchor="end">previsão 7 dias</text>
+      <text className="vz-label" x={x0} y="52">
+        BTC/USD
+      </text>
+      <text className="vz-label vz-accent" x={x1} y="52" textAnchor="end">
+        previsão 7 dias
+      </text>
       {candles.map((candle, index) => {
         const cx = x0 + step * (index + 0.5);
         const openY = y(candle.open);
@@ -122,7 +122,9 @@ function UniverseVisual({ project }) {
       ))}
       <circle className="uv-glow" cx={cx} cy={cy} r="56" />
       <circle className="uv-core" cx={cx} cy={cy} r="36" />
-      <text className="uv-label" x={cx} y={cy + 5}>você</text>
+      <text className="uv-label" x={cx} y={cy + 5}>
+        você
+      </text>
       {orbits.map((orbit, index) => {
         const ry = (orbit.rx * 0.38).toFixed(1);
         const motionPath = `M ${cx - orbit.rx} ${cy} a ${orbit.rx} ${ry} 0 1 0 ${2 * orbit.rx} 0 a ${orbit.rx} ${ry} 0 1 0 ${-2 * orbit.rx} 0`;
@@ -143,16 +145,42 @@ function UniverseVisual({ project }) {
 
 function ChatVisual({ project }) {
   return (
-    <div className="chat" role="img" aria-label="Ilustração: conversa em um chat em tempo real" data-project-visual={project.slug}>
-      <div className="chat-side"><b>online</b><span>Ana</span><span>Léo</span><span>você</span><span className="off">Bia</span></div>
+    <div
+      className="chat"
+      role="img"
+      aria-label="Ilustração: conversa em um chat em tempo real"
+      data-project-visual={project.slug}
+    >
+      <div className="chat-side">
+        <b>online</b>
+        <span>Ana</span>
+        <span>Léo</span>
+        <span>você</span>
+        <span className="off">Bia</span>
+      </div>
       <div className="chat-main">
-        <div className="chat-head"><span>#geral</span><em>3 online</em></div>
+        <div className="chat-head">
+          <span>#geral</span>
+          <em>3 online</em>
+        </div>
         <div className="chat-body">
-          <p className="msg" style={{ '--i': 0 }}><b>Ana</b>alguém revisou o PR do login?</p>
-          <p className="msg me" style={{ '--i': 1 }}>revisei agora, pode fazer o merge</p>
-          <p className="msg" style={{ '--i': 2 }}><b>Léo</b>merge feito, subindo pro servidor</p>
-          <p className="msg me" style={{ '--i': 3 }}>valeu! já está no ar</p>
-          <p className="msg typing" style={{ '--i': 4 }}><i style={{ '--d': 0 }}></i><i style={{ '--d': 1 }}></i><i style={{ '--d': 2 }}></i></p>
+          <p className="msg" style={{ '--i': 0 }}>
+            <b>Ana</b>alguém revisou o PR do login?
+          </p>
+          <p className="msg me" style={{ '--i': 1 }}>
+            revisei agora, pode fazer o merge
+          </p>
+          <p className="msg" style={{ '--i': 2 }}>
+            <b>Léo</b>merge feito, subindo pro servidor
+          </p>
+          <p className="msg me" style={{ '--i': 3 }}>
+            valeu! já está no ar
+          </p>
+          <p className="msg typing" style={{ '--i': 4 }}>
+            <i style={{ '--d': 0 }}></i>
+            <i style={{ '--d': 1 }}></i>
+            <i style={{ '--d': 2 }}></i>
+          </p>
         </div>
       </div>
     </div>
@@ -161,13 +189,35 @@ function ChatVisual({ project }) {
 
 function PostVisual({ project }) {
   return (
-    <div className="pl" role="img" aria-label="Ilustração: post de rede social sendo gerado" data-project-visual={project.slug}>
-      <div className="pl-card c3"><span>campanha de email</span><i></i><i></i><i></i></div>
-      <div className="pl-card c2"><span>artigo de blog</span><i></i><i></i><i></i><i></i></div>
+    <div
+      className="pl"
+      role="img"
+      aria-label="Ilustração: post de rede social sendo gerado"
+      data-project-visual={project.slug}
+    >
+      <div className="pl-card c3">
+        <span>campanha de email</span>
+        <i></i>
+        <i></i>
+        <i></i>
+      </div>
+      <div className="pl-card c2">
+        <span>artigo de blog</span>
+        <i></i>
+        <i></i>
+        <i></i>
+        <i></i>
+      </div>
       <div className="pl-card c1">
-        <div className="pl-top"><i></i><span>padaria.do.bairro</span></div>
+        <div className="pl-top">
+          <i></i>
+          <span>padaria.do.bairro</span>
+        </div>
         <div className="pl-img">imagem do post</div>
-        <p className="pl-caption" data-text="Pão quentinho saindo agora. Passa aqui antes das 9h e leva o café junto."></p>
+        <p
+          className="pl-caption"
+          data-text="Pão quentinho saindo agora. Passa aqui antes das 9h e leva o café junto."
+        ></p>
         <span className="pl-tag">gerado com IA</span>
       </div>
     </div>
@@ -175,7 +225,9 @@ function PostVisual({ project }) {
 }
 
 function BitsVisual({ project }) {
-  const chars = Array.from(project.name).filter((char) => char !== ' ').slice(0, 7);
+  const chars = Array.from(project.name)
+    .filter((char) => char !== ' ')
+    .slice(0, 7);
   const cell = 30;
   const gap = 8;
   const step = cell + gap;
@@ -186,13 +238,19 @@ function BitsVisual({ project }) {
 
   return (
     <svg viewBox="0 0 640 480" data-project-visual={project.slug}>
-      <text className="vz-label" x="40" y="52">{project.name}</text>
-      <text className="vz-label vz-accent" x="600" y="52" textAnchor="end">em binário</text>
+      <text className="vz-label" x="40" y="52">
+        {project.name}
+      </text>
+      <text className="vz-label vz-accent" x="600" y="52" textAnchor="end">
+        em binário
+      </text>
       {chars.map((char, row) => {
         const bits = toBits(char).slice(-8);
         return (
           <g key={`${char}-${row}`}>
-            <text className="bt-ch" x={x0 - 22} y={(y0 + row * step + cell * 0.72).toFixed(1)} textAnchor="end">{char}</text>
+            <text className="bt-ch" x={x0 - 22} y={(y0 + row * step + cell * 0.72).toFixed(1)} textAnchor="end">
+              {char}
+            </text>
             {Array.from({ length: 8 }, (_, col) => (
               <rect
                 className={`bt-cell${bits[col] === '1' ? ' on' : ''}`}
@@ -240,7 +298,11 @@ function WireVisual({ project, uid }) {
   const strip = (key) => (
     <>
       <path className="wv-line" d={path} key={`${key}-path`} />
-      {labels.map((label) => <text className="wv-ch" x={label.x} y={top - 16} key={`${key}-${label.key}`}>{label.char}</text>)}
+      {labels.map((label) => (
+        <text className="wv-ch" x={label.x} y={top - 16} key={`${key}-${label.key}`}>
+          {label.char}
+        </text>
+      ))}
     </>
   );
 
@@ -253,10 +315,16 @@ function WireVisual({ project, uid }) {
           <stop offset=".86" stopColor="#050913" stopOpacity="0" />
           <stop offset="1" stopColor="#050913" />
         </linearGradient>
-        <clipPath id={clipId}><rect width="640" height="480" /></clipPath>
+        <clipPath id={clipId}>
+          <rect width="640" height="480" />
+        </clipPath>
       </defs>
-      <text className="vz-label" x="40" y="52">pedrobicas.com</text>
-      <text className="vz-label vz-accent" x="600" y="52" textAnchor="end">transmitindo</text>
+      <text className="vz-label" x="40" y="52">
+        pedrobicas.com
+      </text>
+      <text className="vz-label vz-accent" x="600" y="52" textAnchor="end">
+        transmitindo
+      </text>
       <g clipPath={`url(#${clipId})`}>
         <g className="wv-track">
           {strip('first')}
@@ -265,8 +333,12 @@ function WireVisual({ project, uid }) {
       </g>
       <rect y="160" width="640" height="150" fill={`url(#${fadeId})`} />
       <line className="wv-probe" x1="520" x2="520" y1="150" y2="300" />
-      <text className="wv-big" x="40" y="400">01010000</text>
-      <text className="vz-label" x="40" y="430">P, o primeiro byte</text>
+      <text className="wv-big" x="40" y="400">
+        01010000
+      </text>
+      <text className="vz-label" x="40" y="430">
+        P, o primeiro byte
+      </text>
     </svg>
   );
 }

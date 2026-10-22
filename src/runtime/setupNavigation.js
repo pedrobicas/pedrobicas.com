@@ -1,4 +1,5 @@
-import { PROJECTS } from '../data/projects.js';
+import { ROUTES, isAppPath, parseRoute } from '../routing.js';
+import { pageMeta } from '../seo.js';
 
 export function setupNavigation(ctx) {
   const { $, $$, root, state, anim, reduce, gsap, lenis, on, addCleanup } = ctx;
@@ -9,8 +10,9 @@ export function setupNavigation(ctx) {
   const switchButtons = $$('.switch button');
   const thumb = $('.switch-thumb');
   const main = $('main');
+  const dots = $('.dots');
+  const skip = $('.skip');
   const pages = { projetos: gallery, cv };
-  const titles = { portfolio: 'Pedro Bicas, desenvolvedor full-stack', projetos: 'Projetos | Pedro Bicas', cv: 'Currículo | Pedro Bicas' };
   let modeTimeline = null;
 
   function placeThumb() {
@@ -20,13 +22,20 @@ export function setupNavigation(ctx) {
     thumb.style.transform = `translateX(${button.offsetLeft - 5}px)`;
   }
   function updateTitle() {
-    const slug = ctx.gallery.getDetailSlug();
-    const project = state.mode === 'projetos' && slug ? PROJECTS.find((item) => item.slug === slug) : null;
-    document.title = project ? `${project.name} | Pedro Bicas` : titles[state.mode];
+    const slug = state.mode === 'projetos' ? ctx.gallery.getDetailSlug() : null;
+    document.title = pageMeta({ mode: state.mode, slug }).title;
   }
   function setMode(nextMode, options = {}) {
-    if (nextMode === state.mode) { options.then?.(); return; }
-    if (modeTimeline) { modeTimeline.progress(1); modeTimeline.kill(); modeTimeline = null; }
+    if (nextMode === state.mode) {
+      options.then?.();
+      return;
+    }
+    if (modeTimeline) {
+      const previousTimeline = modeTimeline;
+      previousTimeline.progress(1);
+      previousTimeline.kill();
+      modeTimeline = null;
+    }
     state.mode = nextMode;
     root.dataset.mode = nextMode;
     switchButtons.forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.mode === nextMode)));
@@ -36,9 +45,14 @@ export function setupNavigation(ctx) {
       cv.hidden = nextMode !== 'cv';
       gallery.hidden = nextMode !== 'projetos';
       main.inert = nextMode !== 'portfolio';
+      dots.inert = nextMode !== 'portfolio';
+      skip.inert = nextMode !== 'portfolio';
       if (nextMode !== 'projetos') ctx.gallery.closeDetail(true);
       if (nextMode === 'portfolio') lenis?.start();
-      else { lenis?.stop(); pages[nextMode].scrollTop = 0; }
+      else {
+        lenis?.stop();
+        pages[nextMode].scrollTop = 0;
+      }
       if (nextMode === 'projetos') ctx.gallery.galleryEnter();
       ctx.gallery.updateLive();
       ctx.cursor?.refreshState?.();
@@ -48,26 +62,34 @@ export function setupNavigation(ctx) {
         else if (nextMode === 'projetos') $('#g-title').focus({ preventScroll: true });
       }
     };
-    if (!anim || options.instant) { swap(); return; }
-    modeTimeline = gsap.timeline({ onComplete() { modeTimeline = null; } });
+    if (!anim || options.instant) {
+      swap();
+      return;
+    }
+    modeTimeline = gsap.timeline({
+      onComplete() {
+        modeTimeline = null;
+      },
+    });
     if (options.origin) {
       const rect = options.origin;
       const from = `inset(${Math.max(0, rect.top).toFixed(0)}px ${Math.max(0, innerWidth - rect.right).toFixed(0)}px ${Math.max(0, innerHeight - rect.bottom).toFixed(0)}px ${Math.max(0, rect.left).toFixed(0)}px round 14px)`;
-      modeTimeline.set(wipe, { yPercent: 0, clipPath: from, visibility: 'visible' }).to(wipe, { clipPath: 'inset(0px 0px 0px 0px round 0px)', duration: 0.85, ease: 'expo.inOut' });
+      modeTimeline
+        .set(wipe, { yPercent: 0, clipPath: from, visibility: 'visible' })
+        .to(wipe, { clipPath: 'inset(0px 0px 0px 0px round 0px)', duration: 0.85, ease: 'expo.inOut' });
     } else {
-      modeTimeline.set(wipe, { yPercent: 100, visibility: 'visible' }).to(wipe, { yPercent: 0, duration: 0.55, ease: 'expo.in' });
+      modeTimeline
+        .set(wipe, { yPercent: 100, visibility: 'visible' })
+        .to(wipe, { yPercent: 0, duration: 0.55, ease: 'expo.in' });
     }
-    modeTimeline.add(swap).to(wipe, { yPercent: -100, duration: 0.75, ease: 'expo.out' }).set(wipe, { visibility: 'hidden', clipPath: 'none' });
-    if (nextMode === 'cv') modeTimeline.from('.cv-sheet', { y: 60, opacity: 0, duration: 0.9, ease: 'expo.out' }, '-=0.6');
+    modeTimeline
+      .add(swap)
+      .to(wipe, { yPercent: -100, duration: 0.75, ease: 'expo.out' })
+      .set(wipe, { visibility: 'hidden', clipPath: 'none' });
+    if (nextMode === 'cv')
+      modeTimeline.from('.cv-sheet', { y: 60, opacity: 0, duration: 0.9, ease: 'expo.out' }, '-=0.6');
   }
 
-  function parseRoute(hash) {
-    const match = (hash || '').match(/^#\/([^/?]+)(?:\/([^/?]+))?/);
-    if (!match) return { mode: 'portfolio' };
-    if (match[1] === 'projetos') return { mode: 'projetos', slug: match[2] ? decodeURIComponent(match[2]) : null };
-    if (match[1] === 'curriculo') return { mode: 'cv' };
-    return { mode: 'portfolio' };
-  }
   function applyRoute(route, options = {}) {
     setMode(route.mode, {
       instant: options.instant,
@@ -82,34 +104,51 @@ export function setupNavigation(ctx) {
       },
     });
   }
-  function go(hash, options = {}) {
-    const url = hash && hash !== '#/' ? hash : location.pathname + location.search;
-    try { history[options.replace ? 'replaceState' : 'pushState'](null, '', url); } catch { /* history may be unavailable */ }
-    applyRoute(parseRoute(hash), options);
+  function go(path, options = {}) {
+    const url = path || ROUTES.portfolio;
+    const method = options.replace || url === location.pathname ? 'replaceState' : 'pushState';
+    try {
+      history[method](null, '', url);
+    } catch {
+      /* history may be unavailable */
+    }
+    applyRoute(parseRoute(url), options);
   }
   ctx.go = go;
 
-  const handlePopState = () => applyRoute(parseRoute(location.hash));
+  const handlePopState = () => applyRoute(parseRoute(location.pathname));
   on(window, 'popstate', handlePopState);
-  const routes = { portfolio: '', projetos: '#/projetos', cv: '#/curriculo' };
-  switchButtons.forEach((button) => on(button, 'click', () => go(routes[button.dataset.mode])));
-  on($('[data-back]'), 'click', () => go(''));
+  switchButtons.forEach((button) => on(button, 'click', () => go(ROUTES[button.dataset.mode])));
+  on($('[data-back]'), 'click', () => go(ROUTES.portfolio));
+  on($('[data-print]'), 'click', () => window.print());
   on(window, 'keydown', (event) => {
     if (event.key !== 'Escape') return;
-    if (!detail.hidden) go('#/projetos');
-    else if (state.mode !== 'portfolio') go('');
+    if (!detail.hidden) go(ROUTES.projetos);
+    else if (state.mode !== 'portfolio') go(ROUTES.portfolio);
   });
 
   on(document, 'click', (event) => {
-    const anchor = event.target.closest('a[href^="#"]');
-    if (!anchor) return;
+    if (
+      event.defaultPrevented ||
+      event.button !== 0 ||
+      event.metaKey ||
+      event.ctrlKey ||
+      event.shiftKey ||
+      event.altKey
+    )
+      return;
+    const anchor = event.target.closest('a[href]');
+    if (!anchor || anchor.target === '_blank' || anchor.hasAttribute('download')) return;
     const href = anchor.getAttribute('href');
-    if (href.startsWith('#/')) {
+    // Rotas internas (/projetos, /projetos/:slug, /curriculo) trocam de modo sem recarregar a página.
+    if (href.startsWith('/') && !href.startsWith('//')) {
+      const url = new URL(href, location.origin);
+      if (!isAppPath(url.pathname)) return;
       event.preventDefault();
-      go(href, { origin: anchor.hasAttribute('data-origin') && anim ? anchor.getBoundingClientRect() : null });
+      go(url.pathname, { origin: anchor.hasAttribute('data-origin') && anim ? anchor.getBoundingClientRect() : null });
       return;
     }
-    if (href.length < 2) return;
+    if (!href.startsWith('#') || href.length < 2) return;
     const target = document.querySelector(href);
     if (!target) return;
     event.preventDefault();
@@ -117,34 +156,55 @@ export function setupNavigation(ctx) {
       if (lenis) lenis.scrollTo(target, immediate ? { immediate: true, force: true } : { duration: 1.6 });
       else target.scrollIntoView({ behavior: immediate || reduce ? 'auto' : 'smooth' });
     };
-    if (state.mode !== 'portfolio') go('', { then: () => scroll(true) }); else scroll(false);
+    if (state.mode !== 'portfolio') go(ROUTES.portfolio, { then: () => scroll(true) });
+    else scroll(false);
     if (anchor.classList.contains('skip')) target.focus({ preventScroll: true });
   });
 
+  const markScrolled = () => root.classList.toggle('is-scrolled', window.scrollY > 40);
+  markScrolled();
+  on(window, 'scroll', markScrolled, { passive: true });
+  addCleanup(() => root.classList.remove('is-scrolled'));
+
   const dotLinks = $$('.dots a');
-  const sectionObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (!entry.isIntersecting) return;
-      const id = entry.target.id;
-      dotLinks.forEach((anchor) => {
-        const active = anchor.getAttribute('href') === `#${id}`;
-        anchor.classList.toggle('active', active);
-        if (active) anchor.setAttribute('aria-current', 'true'); else anchor.removeAttribute('aria-current');
+  const sectionObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const id = entry.target.id;
+        dotLinks.forEach((anchor) => {
+          const active = anchor.getAttribute('href') === `#${id}`;
+          anchor.classList.toggle('active', active);
+          if (active) anchor.setAttribute('aria-current', 'true');
+          else anchor.removeAttribute('aria-current');
+        });
+        root.classList.toggle('on-blue-zone', id === 'contato');
       });
-      root.classList.toggle('on-blue-zone', id === 'contato');
-    });
-  }, { rootMargin: '-48% 0px -51% 0px' });
-  ['topo', 'sobre', 'stack', 'trajetoria', 'projetos', 'contato'].forEach((id) => sectionObserver.observe(document.getElementById(id)));
+    },
+    { rootMargin: '-48% 0px -51% 0px' },
+  );
+  ['topo', 'projetos', 'sobre', 'trajetoria', 'stack', 'contato'].forEach((id) =>
+    sectionObserver.observe(document.getElementById(id)),
+  );
   addCleanup(() => sectionObserver.disconnect());
 
-  const visibilityObserver = new IntersectionObserver((entries) => entries.forEach((entry) => {
-    if (entry.target.id === 'topo') state.heroVisible = entry.isIntersecting;
-    if (entry.target.id === 'stack') state.stackVisible = entry.isIntersecting;
-    if (entry.target.id === 'contato') state.contactVisible = entry.isIntersecting;
-  }));
+  const visibilityObserver = new IntersectionObserver((entries) =>
+    entries.forEach((entry) => {
+      if (entry.target.id === 'topo') state.heroVisible = entry.isIntersecting;
+      if (entry.target.id === 'stack') state.stackVisible = entry.isIntersecting;
+      if (entry.target.id === 'contato') state.contactVisible = entry.isIntersecting;
+    }),
+  );
   [$('#topo'), $('#stack'), $('#contato')].forEach((element) => visibilityObserver.observe(element));
   addCleanup(() => visibilityObserver.disconnect());
   addCleanup(() => modeTimeline?.kill());
+
+  // Posiciona a pílula do seletor antes da primeira pintura, sem a transição de largura;
+  // layoutAll reajusta quando as fontes carregam.
+  thumb.style.transition = 'none';
+  placeThumb();
+  thumb.getBoundingClientRect();
+  thumb.style.removeProperty('transition');
 
   ctx.navigation = { parseRoute, applyRoute, go, setMode, placeThumb, updateTitle };
   return ctx.navigation;

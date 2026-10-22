@@ -1,6 +1,6 @@
 {
   "name": "pedrobicas-portfolio",
-  "version": "2.0.3",
+  "version": "2.1.0",
   "private": true,
   "description": "Portfólio pessoal de Pedro Bicas, construído com React, Vite, GSAP, Lenis e Canvas.",
   "type": "module",
@@ -16,7 +16,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && vite build --ssr src/entry-server.jsx --outDir dist-ssr && node scripts/prerender.mjs",
     "preview": "vite preview",
     "lint": "eslint . --max-warnings=0",
     "format": "prettier --write .",
@@ -26,7 +26,7 @@
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:install": "playwright install chromium",
-    "check": "npm run lint && npm run test:unit && npm run build",
+    "check": "npm run lint && npm run format:check && npm run test:unit && npm run build",
     "verify": "npm run check && npm run test:e2e:install && npm run test:e2e",
     "lockfile": "npm install --package-lock-only"
   },
@@ -41,12 +41,12 @@
     "@playwright/test": "1.63.0",
     "@vitejs/plugin-react": "4.7.0",
     "eslint": "10.12.0",
+    "eslint-plugin-jsx-a11y-x": "0.2.0",
     "eslint-plugin-react-hooks": "7.1.1",
     "eslint-plugin-react-refresh": "0.5.7",
     "globals": "17.12.0",
     "prettier": "3.9.9",
-    "vite": "6.4.3",
-    "eslint-plugin-jsx-a11y-x": "0.2.0"
+    "vite": "6.4.3"
   },
   "allowScripts": {
     "esbuild@0.25.12": true

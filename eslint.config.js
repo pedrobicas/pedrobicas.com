@@ -6,15 +6,11 @@ import reactRefresh from 'eslint-plugin-react-refresh';
 import { defineConfig, globalIgnores } from 'eslint/config';
 
 export default defineConfig([
-  globalIgnores(['dist', 'playwright-report', 'test-results', 'coverage']),
+  globalIgnores(['dist', 'dist-ssr', 'playwright-report', 'test-results', 'coverage']),
   {
     files: ['**/*.{js,jsx}'],
     ...jsxA11y.configs.recommended,
-    extends: [
-      js.configs.recommended,
-      reactHooks.configs.flat.recommended,
-      reactRefresh.configs.vite,
-    ],
+    extends: [js.configs.recommended, reactHooks.configs.flat.recommended, reactRefresh.configs.vite],
     languageOptions: {
       ...jsxA11y.configs.recommended.languageOptions,
       globals: {

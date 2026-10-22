@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/pedrobicas/pedrobicas.com/actions/workflows/ci.yml/badge.svg)](https://github.com/pedrobicas/pedrobicas.com/actions/workflows/ci.yml)
 
-Portfólio pessoal de Pedro Bicas, desenvolvido com React + Vite e uma camada visual baseada em GSAP, Lenis, Canvas e SVG. A implementação prioriza duas coisas ao mesmo tempo: preservar a experiência visual original e manter uma arquitetura de código clara, modular e testável.
+Portfólio pessoal em React + Vite, com HTML pré-renderizado no build e uma camada de animação com GSAP e Lenis.
 
 [**Abrir pedrobicas.com**](https://pedrobicas.com)
 
@@ -10,99 +10,80 @@ Portfólio pessoal de Pedro Bicas, desenvolvido com React + Vite e uma camada vi
 
 ## Stack
 
-- React 18
-- Vite 6
-- JavaScript ES Modules
-- GSAP + ScrollTrigger
-- Lenis
-- Canvas e SVG
-- ESLint + regras de React Hooks e acessibilidade
-- Prettier
-- Node Test Runner
-- Playwright
-- GitHub Actions
+- React 18 e Vite 6
+- GSAP (ScrollTrigger) e Lenis para animação e rolagem
+- SVG para as capas ilustradas dos projetos
+- ESLint, Prettier, Node Test Runner e Playwright
+- GitHub Actions e Dependabot
 
-## O que existe no projeto
+## Como funciona
 
-A home inclui loader animado, cursor customizado, navegação por seções, animações tipográficas, canvas binário, terminal interativo, trajetória, projetos em scroll horizontal, galeria com filtros e visualização em lista/grade, painel de detalhes, currículo imprimível e contato.
+- **Rotas reais.** Cada projeto tem uma URL própria (`/projetos/stack10`), além de `/projetos` e `/curriculo`. Links antigos no formato `#/projetos/...` são redirecionados.
+- **Pré-renderização.** O build gera um `index.html` por rota, com título, descrição, canonical e Open Graph próprios, e um `sitemap.xml`. O conteúdo aparece mesmo sem JavaScript; no navegador, o React hidrata a página.
+- **React e runtime.** O React renderiza a estrutura e o conteúdo, inclusive o painel de detalhe de cada projeto. O runtime (`src/runtime/`) cuida do que precisa de acesso direto ao DOM: animações, rolagem, medições de layout, cursor e transições entre os modos.
+- **Acessibilidade.** Foco preso no painel de detalhe, navegação por teclado, `inert` fora do modal e respeito a `prefers-reduced-motion`.
 
-A aplicação também respeita `prefers-reduced-motion`: quando o usuário pede menos movimento, as animações mais intensas são desativadas sem remover conteúdo ou funcionalidade.
+Detalhes em [`docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md).
 
-## Arquitetura
+## Estrutura
 
 ```text
 src/
-├── components/   # UI reutilizável, overlays, galeria e detalhes
-├── sections/     # Seções principais da home
-├── data/         # Projetos, stack, trajetória e constantes
-├── hooks/        # Ponte entre o lifecycle do React e o runtime visual
-├── runtime/      # GSAP, Lenis, Canvas, observers, cursor e navegação
-├── utils/        # Funções puras e helpers
-├── App.jsx
-├── main.jsx
-└── styles.css
-
+├── components/      # UI reutilizável, galeria, detalhe e currículo
+├── sections/        # Seções da home
+├── data/            # Projetos, stack, trajetória e constantes
+├── state/           # Projeto selecionado (useSyncExternalStore)
+├── hooks/           # Liga o lifecycle do React ao runtime
+├── runtime/         # GSAP, Lenis, observers, cursor e navegação
+├── utils/           # Funções puras
+├── routing.js       # Rotas, usado no navegador, no build e nos testes
+├── seo.js           # Título, descrição e imagem de cada rota
+├── entry-server.jsx # Renderização no build
+└── main.jsx         # Hidratação no navegador
+scripts/
+└── prerender.mjs    # Gera o HTML de cada rota e o sitemap
 tests/
-├── unit/         # Utilitários, dados e integridade visual
-└── e2e/          # Smoke tests em Chromium com Playwright
+├── unit/            # Rotas, SEO, dados e utilitários
+└── e2e/             # Fluxos em Chromium contra o build de produção
 ```
-
-O React é responsável pela estrutura e pelo conteúdo declarativo. Código imperativo fica restrito ao que realmente exige acesso direto ao DOM: medições de layout, ScrollTrigger, Canvas, Lenis, cursor magnético e algumas transições de navegação.
-
-As ilustrações dos projetos são JSX/SVG reais; não há `dangerouslySetInnerHTML`. O CSS visual aprovado é protegido por um teste de hash para evitar alterações acidentais durante refactors.
-
-Mais detalhes em [`docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md).
 
 ## Rodando localmente
 
-Recomendado: Node `22.19.0` ou uma versão compatível com o campo `engines` do `package.json`.
+Node `22.19.0` (ver `.nvmrc`).
 
 ```bash
-npm install
-npm run dev
-```
-
-Produção:
-
-```bash
-npm run build
-npm run preview
+npm ci
+npm run dev       # desenvolvimento
+npm run build     # build + pré-renderização em dist/
+npm run preview   # serve dist/ como em produção
 ```
 
 ## Qualidade
 
 ```bash
 npm run lint          # ESLint
-npm run format        # formata arquivos suportados
-npm run format:check  # valida formatação
-npm run lockfile      # regenera somente o package-lock.json
-npm run test:unit     # testes rápidos sem browser
-npm run test:e2e      # smoke tests com Playwright
-npm run check         # lint + unit + build
-npm run verify        # check + instala Chromium + e2e
+npm run format:check  # Prettier
+npm run test:unit     # testes sem navegador
+npm run test:e2e      # Playwright (faz o build e testa o resultado)
+npm run check         # lint + formatação + unit + build
+npm run verify        # check + Chromium + e2e
 ```
 
-O `npm run verify` já garante a instalação do Chromium gerenciado pelo Playwright antes dos smoke tests. Se quiser rodar apenas `npm run test:e2e` isoladamente numa máquina nova, use antes `npm run test:e2e:install`.
+O CI roda lint, formatação, testes unitários, build e os testes E2E.
 
-O CI do GitHub executa lint, testes unitários, build e smoke tests em Chromium. O projeto também declara explicitamente o script de instalação do `esbuild` como permitido para npm 12, evitando instalações incompletas com o binário do Vite bloqueado. Quando `package-lock.json` está versionado, o workflow usa `npm ci`; em um checkout ainda sem lockfile, faz `npm install`. O Dependabot verifica atualizações de dependências mensalmente.
+## Deploy
+
+`dist/` é estático. O host precisa servir `dist/projetos/stack10/index.html` para `/projetos/stack10`, o que Vercel, Netlify, Cloudflare Pages e GitHub Pages já fazem por padrão.
 
 ## Conteúdo
 
-Os dados que mudam com mais frequência ficam separados da camada visual:
-
-- `src/data/projects.js` — projetos e links
+- `src/data/projects.js` — projetos, links e estudos de caso
 - `src/data/stack.js` — tecnologias
 - `src/data/journey.js` — trajetória
-- `src/data/site.js` — constantes globais
-
-## Decisões de engenharia
-
-O projeto usa React StrictMode em desenvolvimento. O runtime visual devolve cleanup ao React e remove listeners, observers, timers, tickers, instâncias de Lenis e ScrollTriggers ao desmontar.
-
-A interface foi mantida deliberadamente próxima da versão original. Por isso o CSS principal não é reformatado automaticamente pelo Prettier; `src/styles.css` fica na lista de ignore e é protegido por teste de integridade.
+- `src/data/site.js` — email, seções e áreas
 
 ## Código e uso
 
-O repositório é público para demonstrar implementação e decisões de engenharia. **Não é um projeto open source e não possui licença de reutilização.**
+O repositório é público para mostrar a implementação. **Não é open source e não tem licença de reutilização.**
 
 © 2026 Pedro Bicas. Todos os direitos reservados.

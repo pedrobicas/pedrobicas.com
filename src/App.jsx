@@ -20,13 +20,22 @@ export default function App() {
 
   return (
     <>
-      <a className="skip" href="#conteudo">Pular para o conteúdo</a>
+      <a className="skip" href="#conteudo">
+        Pular para o conteúdo
+      </a>
       <div className="grain" aria-hidden="true"></div>
       <CustomCursor />
       <Loader />
       <Header />
       <SectionDots />
-      <main id="conteudo" tabIndex="-1"><Hero /><About /><Stack /><Journey /><Projects /><Contact /></main>
+      <main id="conteudo" tabIndex="-1">
+        <Hero />
+        <About />
+        <Stack />
+        <Journey />
+        <Projects />
+        <Contact />
+      </main>
       <Resume />
       <ProjectGallery />
       <ProjectPreview />

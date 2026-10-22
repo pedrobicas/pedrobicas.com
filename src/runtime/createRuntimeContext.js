@@ -34,10 +34,19 @@ export function createRuntimeContext() {
     cleanups.push(cleanup);
     return cleanup;
   };
-  const addCleanup = (cleanup) => { if (typeof cleanup === 'function') cleanups.push(cleanup); return cleanup; };
-  const onTick = (fn) => { tasks.add(fn); return addCleanup(() => tasks.delete(fn)); };
+  const addCleanup = (cleanup) => {
+    if (typeof cleanup === 'function') cleanups.push(cleanup);
+    return cleanup;
+  };
+  const onTick = (fn) => {
+    tasks.add(fn);
+    return addCleanup(() => tasks.delete(fn));
+  };
   const timeout = (fn, ms) => {
-    const id = window.setTimeout(() => { timers.delete(id); fn(); }, ms);
+    const id = window.setTimeout(() => {
+      timers.delete(id);
+      fn();
+    }, ms);
     timers.add(id);
     return id;
   };
@@ -46,7 +55,11 @@ export function createRuntimeContext() {
     timers.add(id);
     return id;
   };
-  const clearTimer = (id) => { clearTimeout(id); clearInterval(id); timers.delete(id); };
+  const clearTimer = (id) => {
+    clearTimeout(id);
+    clearInterval(id);
+    timers.delete(id);
+  };
 
   let lenis = null;
   if (anim) {
@@ -88,13 +101,34 @@ export function createRuntimeContext() {
   addCleanup(() => gsap.ticker.remove(ticker));
 
   const ctx = {
-    $, $$, root, reduce, finePointer, anim, gsap, ScrollTrigger, lenis, state,
-    on, onTick, addCleanup, timeout, interval, clearTimer,
+    $,
+    $$,
+    root,
+    reduce,
+    finePointer,
+    anim,
+    gsap,
+    ScrollTrigger,
+    lenis,
+    state,
+    on,
+    onTick,
+    addCleanup,
+    timeout,
+    interval,
+    clearTimer,
     destroy() {
-      [...timers].forEach((id) => { clearTimeout(id); clearInterval(id); });
+      [...timers].forEach((id) => {
+        clearTimeout(id);
+        clearInterval(id);
+      });
       timers.clear();
       while (cleanups.length) {
-        try { cleanups.pop()?.(); } catch { /* cleanup is best-effort */ }
+        try {
+          cleanups.pop()?.();
+        } catch {
+          /* cleanup is best-effort */
+        }
       }
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
       root.classList.remove('has-cursor', 'h-scroll', 'on-blue-zone');

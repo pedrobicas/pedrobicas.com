@@ -12,14 +12,23 @@ export function createLiveVisuals(ctx) {
     const existing = typers.get(caption);
     if (existing) clearTimer(existing);
     const text = caption.dataset.text;
-    if (!on || reduce) { caption.textContent = text; return; }
+    if (!on || reduce) {
+      caption.textContent = text;
+      return;
+    }
     let index = 0;
     let hold = 0;
     caption.textContent = '';
     const id = interval(() => {
-      if (index <= text.length) { caption.textContent = text.slice(0, index++); return; }
+      if (index <= text.length) {
+        caption.textContent = text.slice(0, index++);
+        return;
+      }
       hold += 1;
-      if (hold > 50) { index = 0; hold = 0; }
+      if (hold > 50) {
+        index = 0;
+        hold = 0;
+      }
     }, 42);
     typers.set(caption, id);
   }

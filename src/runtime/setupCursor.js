@@ -58,7 +58,10 @@ export function setupCursor(ctx) {
       xTo((event.clientX - rect.left - rect.width / 2) * strength);
       yTo((event.clientY - rect.top - rect.height / 2) * strength);
     };
-    const leave = () => { xTo(0); yTo(0); };
+    const leave = () => {
+      xTo(0);
+      yTo(0);
+    };
     on(element, 'pointermove', move);
     on(element, 'pointerleave', leave);
     magnetic.set(element, true);

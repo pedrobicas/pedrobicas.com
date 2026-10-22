@@ -4,9 +4,14 @@ export function setupProjects(ctx, live) {
   const progressBar = $('.work-progress span');
   live.pauseSmil($('.work-track'));
 
-  function setInView(project, on) { live.setLive($('.viz', project), on); }
+  function setInView(project, on) {
+    live.setLive($('.viz', project), on);
+  }
   function projectObserver() {
-    const observer = new IntersectionObserver((entries) => entries.forEach((entry) => setInView(entry.target, entry.isIntersecting)), { threshold: 0.25 });
+    const observer = new IntersectionObserver(
+      (entries) => entries.forEach((entry) => setInView(entry.target, entry.isIntersecting)),
+      { threshold: 0.25 },
+    );
     projects.forEach((project) => observer.observe(project));
     addCleanup(() => observer.disconnect());
     return observer;
@@ -22,14 +27,40 @@ export function setupProjects(ctx, live) {
         x: () => -distance(),
         ease: 'none',
         scrollTrigger: {
-          trigger: '.work-pin', pin: true, scrub: 0.8, start: 'top top', end: () => `+=${distance()}`,
+          trigger: '.work-pin',
+          pin: true,
+          scrub: 0.8,
+          start: 'top top',
+          end: () => `+=${distance()}`,
           invalidateOnRefresh: true,
-          onUpdate: (self) => { progressBar.style.transform = `scaleX(${self.progress.toFixed(4)})`; },
+          onUpdate: (self) => {
+            progressBar.style.transform = `scaleX(${self.progress.toFixed(4)})`;
+          },
         },
       });
       projects.forEach((project) => {
-        ctx.ScrollTrigger.create({ trigger: project, containerAnimation: tween, start: 'left 78%', end: 'right 22%', onToggle: (self) => setInView(project, self.isActive) });
-        gsap.fromTo($('.proj-visual', project), { xPercent: 6 }, { xPercent: -6, ease: 'none', scrollTrigger: { trigger: project, containerAnimation: tween, start: 'left right', end: 'right left', scrub: true } });
+        ctx.ScrollTrigger.create({
+          trigger: project,
+          containerAnimation: tween,
+          start: 'left 78%',
+          end: 'right 22%',
+          onToggle: (self) => setInView(project, self.isActive),
+        });
+        gsap.fromTo(
+          $('.proj-visual', project),
+          { xPercent: 6 },
+          {
+            xPercent: -6,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: project,
+              containerAnimation: tween,
+              start: 'left right',
+              end: 'right left',
+              scrub: true,
+            },
+          },
+        );
       });
       return () => {
         root.classList.remove('h-scroll');
