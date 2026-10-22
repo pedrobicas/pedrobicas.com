@@ -12,7 +12,7 @@ Portfólio pessoal em React + Vite, com HTML pré-renderizado no build e uma cam
 
 - React 18 e Vite 6
 - GSAP (ScrollTrigger) e Lenis para animação e rolagem
-- SVG para as capas ilustradas dos projetos
+- Capturas reais em WebP e loops WebM para os projetos, com fallback estático e respeito a movimento reduzido
 - ESLint, Prettier, Node Test Runner e Playwright
 - GitHub Actions e Dependabot
 
@@ -22,8 +22,6 @@ Portfólio pessoal em React + Vite, com HTML pré-renderizado no build e uma cam
 - **Pré-renderização.** O build gera um `index.html` por rota, com título, descrição, canonical e Open Graph próprios, e um `sitemap.xml`. O conteúdo aparece mesmo sem JavaScript; no navegador, o React hidrata a página.
 - **React e runtime.** O React renderiza a estrutura e o conteúdo, inclusive o painel de detalhe de cada projeto. O runtime (`src/runtime/`) cuida do que precisa de acesso direto ao DOM: animações, rolagem, medições de layout, cursor e transições entre os modos.
 - **Acessibilidade.** Foco preso no painel de detalhe, navegação por teclado, `inert` fora do modal e respeito a `prefers-reduced-motion`.
-
-Detalhes em [`docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md).
 
 ## Estrutura
 
@@ -76,6 +74,8 @@ O CI roda lint, formatação, testes unitários, build e os testes E2E.
 `dist/` é estático. O host precisa servir `dist/projetos/stack10/index.html` para `/projetos/stack10`, o que Vercel, Netlify, Cloudflare Pages e GitHub Pages já fazem por padrão.
 
 ## Conteúdo
+
+As fontes das capturas e os modos de demonstração estão em [`docs/media.md`](./docs/media.md).
 
 - `src/data/projects.js` — projetos, links e estudos de caso
 - `src/data/stack.js` — tecnologias

@@ -3,6 +3,7 @@ import { createRoot, hydrateRoot } from 'react-dom/client';
 import App from './App.jsx';
 import './styles.css';
 import './refinements.css';
+import './project-media.css';
 
 const container = document.getElementById('root');
 const app = (

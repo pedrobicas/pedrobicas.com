@@ -35,6 +35,6 @@ test('isAppPath só aceita rotas da aplicação', () => {
   assert.ok(isAppPath('/'));
   assert.ok(isAppPath('/projetos/faxina'));
   assert.ok(isAppPath('/curriculo'));
-  assert.ok(!isAppPath('/projects/stack10.png'));
+  assert.ok(!isAppPath('/projects/stack10/cover.webp'));
   assert.ok(!isAppPath('/projetos/a/b'));
 });

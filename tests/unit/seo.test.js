@@ -12,7 +12,7 @@ test('cada rota tem título, descrição curta e imagem', () => {
       meta.description.length >= 50 && meta.description.length <= 160,
       `${meta.path}: ${meta.description.length}`,
     );
-    assert.match(meta.image.path, /^\/.+\.png$/);
+    assert.match(meta.image.path, /^\/.+\.(png|webp)$/);
     assert.ok(meta.image.alt);
     assert.equal(meta.path, routePath(route));
   }
@@ -26,8 +26,10 @@ test('há uma página para cada projeto, além de home, galeria e currículo', (
 });
 
 test('projetos com captura real usam a imagem como prévia de compartilhamento', () => {
-  assert.equal(pageMeta({ mode: 'projetos', slug: 'stack10' }).image.path, '/projects/stack10.png');
-  assert.equal(pageMeta({ mode: 'projetos', slug: 'chat-tempo-real' }).image.path, '/og.png');
+  for (const slug of ['stack10', 'faxina', 'crypto-analysis', 'chat-tempo-real', 'my-spotify-universe', 'postlocal']) {
+    assert.equal(pageMeta({ mode: 'projetos', slug }).image.path, `/projects/${slug}/cover.webp`);
+  }
+  assert.equal(pageMeta({ mode: 'projetos', slug: 'pedrobicas-com' }).image.path, '/og.png');
 });
 
 test('summarize corta em limite de palavra', () => {

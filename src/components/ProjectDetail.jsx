@@ -7,6 +7,7 @@ import { pad2 } from '../utils/text.js';
 import ProjectLinks from './ProjectLinks.jsx';
 import { ProjectVisualContent } from './ProjectVisual.jsx';
 import Tags from './Tags.jsx';
+import ProjectCaptures from './ProjectCaptures.jsx';
 
 const STUDY_FIELDS = [
   ['problem', 'problema'],
@@ -95,6 +96,7 @@ export default function ProjectDetail() {
             </div>
           </aside>
         </div>
+        <ProjectCaptures project={project} />
         <a className="d-next" href={next ? projectPath(next.slug) : ROUTES.projetos} data-cursor="próximo">
           <small>próximo projeto</small>
           <span>{next?.name}</span>

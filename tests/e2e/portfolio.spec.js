@@ -440,10 +440,12 @@ test('currículo permite impressão e preserva o cabeçalho navegável', async (
 });
 
 test('animações decorativas ficam desativadas com movimento reduzido', async ({ page }) => {
-  const dot = page.locator('.msg.typing i').first();
-  await expect(dot).toBeAttached();
-  expect(await dot.evaluate((node) => getComputedStyle(node).animationName)).toBe('none');
-  await expect(page.locator('.project-shot-scan').first()).toHaveCSS('display', 'none');
+  const videos = page.locator('.project-media video');
+  expect(await videos.count()).toBeGreaterThan(0);
+  for (const video of await videos.all()) {
+    await expect(video).toHaveJSProperty('paused', true);
+    await expect(video).not.toHaveAttribute('src');
+  }
 });
 
 test('a trajetória mantém desenho da linha e transição de anos quando as animações estão ativadas', async ({

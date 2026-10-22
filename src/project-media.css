@@ -1,0 +1,107 @@
+/* Capturas reais: enquadramento sem filtros sobre a interface. */
+.project-media {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  overflow: hidden;
+  background: #0b1019;
+}
+.project-media[hidden] {
+  display: none;
+}
+.project-media img,
+.project-media video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.project-media video {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+.project-media[data-playing='true'] video {
+  opacity: 1;
+}
+.viz:has(> .project-media) {
+  aspect-ratio: 16 / 9;
+}
+.d-cover:has(> .project-media) {
+  max-height: none;
+}
+.project-captures {
+  margin-top: 40px;
+  padding-top: 28px;
+  border-top: 1px solid var(--line);
+}
+.project-captures h3 {
+  margin: 0 0 18px;
+  font: 400 12px var(--mono);
+  color: var(--mute);
+}
+.project-captures-note {
+  color: var(--mute);
+  font-size: 13px;
+  line-height: 1.6;
+  margin: 0 0 22px;
+  max-width: 65ch;
+}
+.project-captures-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  align-items: start;
+}
+.project-captures figure {
+  margin: 0;
+  min-width: 0;
+}
+.project-captures figure:not(.capture-mobile) {
+  grid-column: 1 / -1;
+}
+.project-captures .capture-mobile {
+  grid-column: 1 / -1;
+  width: min(100%, 280px);
+  justify-self: center;
+}
+.project-captures-grid:has(.capture-mobile ~ .capture-mobile) .capture-mobile {
+  grid-column: auto;
+}
+.project-captures a {
+  display: block;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  overflow: hidden;
+  background: #0b1019;
+}
+.project-captures img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.project-captures figcaption {
+  margin-top: 10px;
+  color: var(--mute);
+  font: 400 11px/1.6 var(--mono);
+}
+@media (max-width: 700px) {
+  .project-captures-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 28px;
+  }
+  .project-captures .capture-mobile {
+    grid-column: 1;
+    grid-row: auto;
+    max-width: 280px;
+    justify-self: center;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .project-media video {
+    display: none;
+    transition: none;
+  }
+}

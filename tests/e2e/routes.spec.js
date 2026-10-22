@@ -37,7 +37,7 @@ test('cada rota pré-renderizada tem título, canonical e Open Graph próprios',
     expect(head(html, 'twitter:title')).toBe(title);
   }
   const stack10 = await (await request.get('/projetos/stack10')).text();
-  expect(head(stack10, 'og:image')).toBe('https://www.pedrobicas.com/projects/stack10.png');
+  expect(head(stack10, 'og:image')).toBe('https://www.pedrobicas.com/projects/stack10/cover.webp');
   expect(head(stack10, 'description')).toMatch(/^Falling-block puzzle/);
   expect(stack10).toContain('data-slug="stack10"');
 });
@@ -61,7 +61,12 @@ test('o conteúdo aparece mesmo sem JavaScript', async ({ browser, baseURL }) =>
   try {
     const page = await context.newPage();
     await page.goto('/');
-    await expect(page.getByText('Atuo em todas as camadas de uma aplicação web')).toBeVisible();
+    await expect(page.locator('#sobre .about-text')).toBeVisible();
+    await expect(page.locator('#sobre .about-text')).toContainText('Sou Pedro Bicas');
+    await expect(page.locator('#projetos .project-media img').first()).toHaveAttribute(
+      'src',
+      '/projects/stack10/cover.webp',
+    );
     await expect(page.locator('.loader')).toBeHidden();
     await expect(page.locator('#projetos .proj-name').first()).toHaveText('STACK10');
     await expect(page.locator('#contato')).toContainText('pedro.bicas14@gmail.com');

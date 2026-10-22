@@ -1,11 +1,11 @@
+import { PROJECT_MEDIA } from './projectMedia.js';
+
 export const PROJECTS = [
   {
     slug: 'stack10',
     name: 'STACK10',
     kind: 'game engine client-side',
     areas: ['web', 'games'],
-    viz: 'image',
-    image: '/projects/stack10.png',
     featured: true,
     study: {
       problem: 'Construir um puzzle em que regras, controles e replay não dependam da taxa de quadros do navegador.',
@@ -31,8 +31,6 @@ export const PROJECTS = [
     name: 'Faxina',
     kind: 'utilitário local em Python',
     areas: ['ferramentas'],
-    viz: 'image',
-    image: '/projects/faxina.png',
     featured: true,
     study: {
       problem: 'Identificar arquivos que ocupam espaço sem transformar a limpeza em uma ação irreversível.',
@@ -56,7 +54,6 @@ export const PROJECTS = [
     name: 'Crypto Analysis',
     kind: 'dados e previsão',
     areas: ['dados-ia'],
-    viz: 'crypto',
     featured: true,
     study: {
       problem: 'Distinguir previsões de preços de uma análise que também considere incerteza e risco.',
@@ -82,7 +79,6 @@ export const PROJECTS = [
     name: 'Chat em tempo real',
     kind: 'tempo real, full-stack',
     areas: ['web'],
-    viz: 'chat',
     featured: true,
     study: {
       problem: 'Manter comunicação entre usuários, com atualização rápida de conversas públicas e privadas.',
@@ -108,7 +104,6 @@ export const PROJECTS = [
     name: 'My Spotify Universe',
     kind: 'API e OAuth2',
     areas: ['web'],
-    viz: 'universe',
     desc: 'Integração com a API do Spotify: login com OAuth2 e um painel com os dados da sua conta.',
     highlights: [
       'Login com a conta do Spotify via OAuth2',
@@ -126,7 +121,6 @@ export const PROJECTS = [
     name: 'Postlocal',
     kind: 'IA, full-stack',
     areas: ['web', 'dados-ia'],
-    viz: 'post',
     desc: 'Plataforma que usa IA para criar conteúdo para negócios locais: posts para redes sociais, artigos de blog e campanhas de email, adaptados ao tipo de negócio, ao público e ao tom de voz.',
     highlights: [
       'Arquitetura em serviços: front em Next.js, API em Node.js com Express e um serviço de IA em FastAPI',
@@ -142,7 +136,6 @@ export const PROJECTS = [
     name: 'pedrobicas.com',
     kind: 'este site',
     areas: ['web'],
-    viz: 'wire',
     desc: 'Este portfólio. Páginas pré-renderizadas no build, com rota própria para cada projeto, e uma camada de animação com GSAP e Lenis sobre componentes React.',
     highlights: [
       'HTML gerado no build para cada rota, com título e prévia de compartilhamento por projeto',
@@ -153,6 +146,9 @@ export const PROJECTS = [
     stack: ['React', 'Vite', 'JavaScript', 'GSAP', 'Lenis', 'Playwright'],
     links: [{ label: 'Ver código', href: 'https://github.com/pedrobicas/pedrobicas.com' }],
   },
-];
+].map((project) => {
+  const media = PROJECT_MEDIA[project.slug];
+  return media ? { ...project, image: media.cover, media } : project;
+});
 
 export const FEATURED_PROJECTS = PROJECTS.filter((project) => project.featured);
