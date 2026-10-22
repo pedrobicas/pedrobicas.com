@@ -61,7 +61,9 @@ test('o conteúdo aparece mesmo sem JavaScript', async ({ browser, baseURL }) =>
   try {
     const page = await context.newPage();
     await page.goto('/');
-    await expect(page.getByText('Atuo em todas as camadas de uma aplicação web')).toBeVisible();
+    const about = page.locator('#sobre .about-text');
+    await expect(about).toBeVisible();
+    await expect(about).toContainText('Pedro Bicas');
     await expect(page.locator('.loader')).toBeHidden();
     await expect(page.locator('#projetos .proj-name').first()).toHaveText('STACK10');
     await expect(page.locator('#contato')).toContainText('pedro.bicas14@gmail.com');
