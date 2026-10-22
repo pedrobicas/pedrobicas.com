@@ -16,7 +16,7 @@ export default function About() {
       </p>
       <p className="about-text">
         <span className="about-reveal">
-          <span className="about-reveal-inner">Sou Pedro Bicas, tenho 21 anos e sou{' '}</span>
+          <span className="about-reveal-inner">Sou Pedro Bicas, tenho 21 anos e sou </span>
         </span>
         <span className="about-reveal">
           <span className="about-reveal-inner">
@@ -24,9 +24,11 @@ export default function About() {
           </span>
         </span>
         <span className="about-reveal about-muted">
-          <span className="about-reveal-inner"> Curso Engenharia de Software na FIAP, 
-            sou técnico em Desenvolvimento de Sistemas
-            pelo SENAI e trabalho no InCor desde 2024.</span>
+          <span className="about-reveal-inner">
+            {' '}
+            Curso Engenharia de Software na FIAP, sou técnico em Desenvolvimento de Sistemas pelo SENAI e trabalho no
+            InCor desde 2024.
+          </span>
         </span>
       </p>
       <div className="about-grid">
