@@ -10,8 +10,10 @@ test('a Stack cruza as tecnologias com os projetos e a trajetória', () => {
   assert.deepEqual(spring, [
     { kind: 'project', slug: 'chat-tempo-real', label: 'Chat em tempo real' },
     { kind: 'journey', label: 'FIAP' },
+    { kind: 'journey', label: 'InCor (HC-FMUSP)' },
   ]);
-  assert.ok(whereUsed('React', PROJECTS, JOURNEY).some((use) => use.label === 'InCor (HC-FMUSP)'));
+  assert.deepEqual(whereUsed('C#', PROJECTS, JOURNEY), [{ kind: 'journey', label: 'InCor (HC-FMUSP)' }]);
+  assert.ok(!whereUsed('React', PROJECTS, JOURNEY).some((use) => use.label === 'InCor (HC-FMUSP)'));
 });
 
 test('a Stack distingue Java de JavaScript e reconhece Sass nos projetos SCSS', () => {

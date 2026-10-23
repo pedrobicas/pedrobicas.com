@@ -5,8 +5,9 @@ export const STACK = [
   },
   {
     label: 'back-end',
-    items: ['Java', 'Spring Boot', 'Node.js', 'Express', 'Python', 'Django', 'FastAPI', 'APIs REST'],
+    items: ['Java', 'Spring Boot', 'Node.js', 'Express', 'Python', 'FastAPI', 'APIs REST'],
   },
+  { label: 'mobile e embarcado', items: ['Android', 'C#', 'ESP32'] },
   { label: 'dados', items: ['PostgreSQL', 'MySQL', 'SQLite', 'Pandas'] },
   { label: 'ferramentas', items: ['Docker', 'Git', 'Linux', 'Figma'] },
 ];

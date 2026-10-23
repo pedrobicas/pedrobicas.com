@@ -42,6 +42,6 @@ export const JOURNEY = [
       'APIs REST com Spring Security, JWT e documentação OpenAPI',
       'Android e um projeto embarcado com ESP32 (LilyGO) em C#',
     ],
-    tags: ['Angular', 'Spring Boot', 'Java', 'TypeScript', 'PostgreSQL', 'Android', 'C#'],
+    tags: ['Angular', 'Spring Boot', 'Java', 'TypeScript', 'PostgreSQL', 'Docker', 'Android', 'C#'],
   },
 ];
