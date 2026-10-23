@@ -36,12 +36,12 @@ export const JOURNEY = [
     kind: 'trabalho',
     title: 'Bolsista em desenvolvimento',
     org: 'InCor (HC-FMUSP)',
-    desc: 'Desenvolvo sistemas e aplicações web que apoiam a pesquisa do hospital.',
+    desc: 'Desenvolvo sistemas web e embarcados que apoiam a pesquisa do hospital.',
     points: [
-      'APIs REST para integrar sistemas internos',
-      'Dashboards interativos para visualizar dados clínicos',
-      'Integração contínua e ambientes com Docker',
+      'Aplicações web com Angular e Spring Boot, do banco à interface',
+      'APIs REST com Spring Security, JWT e documentação OpenAPI',
+      'Android e um projeto embarcado com ESP32 (LilyGO) em C#',
     ],
-    tags: ['Python', 'Django', 'React', 'TypeScript', 'PostgreSQL', 'Docker'],
+    tags: ['Angular', 'Spring Boot', 'Java', 'TypeScript', 'PostgreSQL', 'Android', 'C#'],
   },
 ];
