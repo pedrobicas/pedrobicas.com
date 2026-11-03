@@ -24,7 +24,7 @@ export const PROJECTS = [
     ],
     stack: ['Java', 'Spring Boot', 'Spring AI', 'Angular', 'TypeScript', 'PostgreSQL', 'pgvector', 'Docker'],
     links: [
-      { label: 'Abrir demo', href: 'https://sabia-knzg.onrender.com', demo: true },
+      { label: 'Abrir demo', href: 'https://sabia.pedrobicas.com', demo: true },
       { label: 'Ver código', href: 'https://github.com/pedrobicas/sabia' },
     ],
   },
