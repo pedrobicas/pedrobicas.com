@@ -2,6 +2,33 @@ import { PROJECT_MEDIA } from './projectMedia.js';
 
 export const PROJECTS = [
   {
+    slug: 'sabia',
+    name: 'Sabiá',
+    kind: 'RAG, full-stack',
+    areas: ['web', 'dados-ia'],
+    featured: true,
+    study: {
+      problem:
+        'Responder perguntas sobre os documentos de uma empresa sem que o modelo invente, e deixar cada resposta conferível.',
+      decision:
+        'Combinar busca vetorial (pgvector) e busca por palavras do PostgreSQL com Reciprocal Rank Fusion, numerar os trechos no prompt e só chamar o modelo quando algum trecho é relevante; a empresa de cada busca vem sempre do token.',
+      check:
+        'Na demo, pergunte algo que está fora dos documentos e veja a recusa; no repositório, o teste de isolamento cria duas empresas com documentos quase iguais.',
+    },
+    desc: 'Assistente de base de conhecimento para empresas. A equipe pergunta em linguagem natural e cada resposta mostra o documento e o trecho de onde saiu; quando a informação está fora dos documentos, ele diz que não encontrou em vez de inventar.',
+    highlights: [
+      'Busca híbrida: vetores no pgvector e full-text search do PostgreSQL em português, combinados por Reciprocal Rank Fusion',
+      'Respostas em streaming (SSE) com citações clicáveis que abrem o trecho exato e a página do documento',
+      'Várias empresas no mesmo sistema, isoladas pelo token JWT, com teste de integração que prova o isolamento',
+      'Demonstração pública com conta temporária por visitante, limites de uso e painel com as perguntas que ficaram sem resposta',
+    ],
+    stack: ['Java', 'Spring Boot', 'Spring AI', 'Angular', 'TypeScript', 'PostgreSQL', 'pgvector', 'Docker'],
+    links: [
+      { label: 'Abrir demo', href: 'https://sabia-knzg.onrender.com', demo: true },
+      { label: 'Ver código', href: 'https://github.com/pedrobicas/sabia' },
+    ],
+  },
+  {
     slug: 'stack10',
     name: 'STACK10',
     kind: 'game engine client-side',
@@ -54,7 +81,6 @@ export const PROJECTS = [
     name: 'Crypto Analysis',
     kind: 'dados e previsão',
     areas: ['dados-ia'],
-    featured: true,
     study: {
       problem: 'Distinguir previsões de preços de uma análise que também considere incerteza e risco.',
       decision:

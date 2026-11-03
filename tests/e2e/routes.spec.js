@@ -66,10 +66,10 @@ test('o conteúdo aparece mesmo sem JavaScript', async ({ browser, baseURL }) =>
     await expect(about).toContainText('Pedro Bicas');
     await expect(page.locator('#projetos .project-media img').first()).toHaveAttribute(
       'src',
-      '/projects/stack10/cover.webp',
+      '/projects/sabia/cover.webp',
     );
     await expect(page.locator('.loader')).toBeHidden();
-    await expect(page.locator('#projetos .proj-name').first()).toHaveText('STACK10');
+    await expect(page.locator('#projetos .proj-name').first()).toHaveText('Sabiá');
     await expect(page.locator('#contato')).toContainText('pedro.bicas14@gmail.com');
   } finally {
     await context.close();

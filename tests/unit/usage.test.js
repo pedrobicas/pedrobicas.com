@@ -8,6 +8,7 @@ import { whereUsed } from '../../src/utils/usage.js';
 test('a Stack cruza as tecnologias com os projetos e a trajetória', () => {
   const spring = whereUsed('Spring Boot', PROJECTS, JOURNEY);
   assert.deepEqual(spring, [
+    { kind: 'project', slug: 'sabia', label: 'Sabiá' },
     { kind: 'project', slug: 'chat-tempo-real', label: 'Chat em tempo real' },
     { kind: 'journey', label: 'FIAP' },
     { kind: 'journey', label: 'InCor (HC-FMUSP)' },

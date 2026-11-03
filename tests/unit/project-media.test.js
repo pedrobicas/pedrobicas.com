@@ -36,7 +36,7 @@ test('capas e loops respeitam os limites de peso definidos para o portfólio', a
   for (const { media } of PROJECTS.filter((project) => project.media)) {
     const size = async (file) => (await stat(new URL(`../../public${file}`, import.meta.url))).size;
     assert.ok((await size(media.cover)) < 250 * 1024, media.cover);
-    assert.ok((await size(media.video)) < 1024 * 1024, media.video);
+    if (media.video) assert.ok((await size(media.video)) < 1024 * 1024, media.video);
     thumbnailBytes += await size(media.thumbnail);
   }
   assert.ok(thumbnailBytes < 500 * 1024);

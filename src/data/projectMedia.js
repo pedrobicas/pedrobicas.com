@@ -1,4 +1,25 @@
 export const PROJECT_MEDIA = {
+  sabia: {
+    cover: '/projects/sabia/cover.webp',
+    thumbnail: '/projects/sabia/cover-800.webp',
+    note: 'Capturas da demonstração, com empresas, documentos e histórico de perguntas fictícios.',
+    shots: [
+      {
+        src: '/projects/sabia/documents-desktop.webp',
+        width: 1600,
+        height: 900,
+        mobile: false,
+        caption: 'Documentos da empresa com status de processamento e versões.',
+      },
+      {
+        src: '/projects/sabia/analytics-desktop.webp',
+        width: 1600,
+        height: 900,
+        mobile: false,
+        caption: 'Painel de análises do administrador, com um histórico de perguntas de exemplo.',
+      },
+    ],
+  },
   stack10: {
     cover: '/projects/stack10/cover.webp',
     thumbnail: '/projects/stack10/cover-800.webp',
