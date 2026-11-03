@@ -6,7 +6,7 @@ import { EMAIL } from '../data/site.js';
 const WORK = JOURNEY.find((item) => item.year === '2024');
 const EDUCATION = JOURNEY.filter((item) => item.year !== '2024').reverse();
 const SELECTED_PROJECTS = PROJECTS.filter((item) =>
-  ['stack10', 'faxina', 'chat-tempo-real', 'crypto-analysis'].includes(item.slug),
+  ['sabia', 'stack10', 'faxina', 'chat-tempo-real'].includes(item.slug),
 );
 
 export default function Resume() {
