@@ -13,7 +13,7 @@ test('a Stack cruza as tecnologias com os projetos e a trajetória', () => {
     { kind: 'journey', label: 'FIAP' },
     { kind: 'journey', label: 'InCor (HC-FMUSP)' },
   ]);
-  assert.deepEqual(whereUsed('C#', PROJECTS, JOURNEY), [{ kind: 'journey', label: 'InCor (HC-FMUSP)' }]);
+  assert.deepEqual(whereUsed('C++', PROJECTS, JOURNEY), [{ kind: 'journey', label: 'InCor (HC-FMUSP)' }]);
   assert.ok(!whereUsed('React', PROJECTS, JOURNEY).some((use) => use.label === 'InCor (HC-FMUSP)'));
 });
 
