@@ -7,7 +7,7 @@ export const DEFAULT_IMAGE = { path: '/og.png', alt: 'Pedro Bicas, desenvolvedor
 const HOME = {
   title: 'Pedro Bicas, desenvolvedor full-stack',
   description:
-    'Portfólio de Pedro Bicas, desenvolvedor full-stack em São Paulo. Projetos web, ferramentas e aplicações com React, Angular, Java, Node.js e Python.',
+    'Portfólio de Pedro Bicas, desenvolvedor full-stack em São Paulo. Sistemas web completos com Java, Spring Boot e Angular, do banco de dados à interface.',
 };
 
 export function summarize(text, max = 155) {
