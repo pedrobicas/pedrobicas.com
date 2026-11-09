@@ -50,7 +50,7 @@ test('o sitemap lista a home, a galeria, o currículo e todos os projetos', asyn
     '/curriculo',
     '/projetos/stack10',
     '/projetos/chat-tempo-real',
-    '/projetos/postlocal',
+    '/projetos/sabia',
   ]) {
     expect(sitemap).toContain(`<loc>https://www.pedrobicas.com${path}</loc>`);
   }

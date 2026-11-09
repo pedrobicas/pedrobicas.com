@@ -17,7 +17,8 @@ export default function Hero() {
       </div>
       <div className="hero-meta">
         <p className="tagline">
-          Desenvolvedor full-stack. Trabalho com aplicações web, APIs e ferramentas que desenvolvo por conta própria.
+          Desenvolvedor full-stack com Java, Spring Boot e Angular. Construo sistemas web completos, do banco de dados à
+          interface, e tenho sistemas em produção com usuários reais.
         </p>
         <div className="hero-links">
           <a className="hero-project-link" href={ROUTES.projetos}>

@@ -426,7 +426,7 @@ test('currículo permite impressão e preserva o cabeçalho navegável', async (
   await expect(page.locator('#curriculo')).not.toHaveAttribute('aria-modal', 'true');
   await expect(page.locator('.topbar')).not.toHaveAttribute('inert', '');
   await expect(page.locator('.dots')).toHaveAttribute('inert', '');
-  const button = page.getByRole('button', { name: 'Imprimir / salvar PDF' });
+  const button = page.getByRole('button', { name: 'Imprimir', exact: true });
   await page.evaluate(() => {
     window.print = () => {
       document.body.dataset.printCalled = 'yes';

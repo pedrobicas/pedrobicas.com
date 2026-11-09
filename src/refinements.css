@@ -940,3 +940,110 @@
 :root:not(.js-anim):not(.rm) .switch button[aria-pressed='true'] {
   background: var(--blue);
 }
+
+/* Texto do topo um pouco mais largo no desktop */
+@media (min-width: 701px) {
+  .hero-refined .tagline {
+    max-width: 46ch;
+  }
+}
+
+/* Aviso das demos em hospedagem gratuita */
+.demo-note {
+  margin: 14px 0 0;
+  max-width: 44ch;
+  font: 400 11px/1.5 var(--mono);
+  color: var(--mute);
+}
+
+/* O que eu faço, no contato */
+.contact-offer {
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr);
+  gap: 18px 25px;
+  margin-top: 65px;
+  padding-top: 30px;
+  border-top: 1px solid #c1d7ff55;
+}
+.contact-offer > .contact-channel {
+  margin: 4px 0 0;
+  font-weight: 400;
+}
+.contact-offer-text {
+  margin: 0;
+  max-width: 46ch;
+  font-size: 17px;
+  line-height: 1.5;
+  color: #f2f7ff;
+  font-variation-settings:
+    'wdth' 95,
+    'wght' 400;
+}
+.contact-offer-list {
+  display: grid;
+  gap: 8px;
+  margin: 0 0 6px;
+  padding: 0;
+  list-style: none;
+}
+.contact-offer-list li {
+  position: relative;
+  padding-left: 20px;
+  font-size: 17px;
+  line-height: 1.45;
+  color: #f2f7ff;
+  font-variation-settings:
+    'wdth' 95,
+    'wght' 400;
+}
+.contact-offer-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.72em;
+  width: 9px;
+  height: 1px;
+  background: #c9dcff;
+}
+.contact-brief {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 44px;
+  margin-top: 20px;
+  padding: 0 20px;
+  border: 1px solid #c1d7ff88;
+  border-radius: 999px;
+  font: 400 12px/1.5 var(--mono);
+  color: #f2f7ff;
+  text-decoration: none;
+  transition:
+    background 0.3s var(--ease),
+    color 0.3s var(--ease),
+    border-color 0.3s var(--ease);
+}
+.contact-brief .contact-arrow {
+  width: 16px;
+  height: 16px;
+}
+.contact-brief:hover,
+.contact-brief:focus-visible {
+  background: #f2f7ff;
+  border-color: #f2f7ff;
+  color: #16427f;
+}
+.contact-brief:hover .contact-arrow,
+.contact-brief:focus-visible .contact-arrow {
+  transform: translate(3px, -3px);
+}
+@media (max-width: 850px) {
+  .contact-offer {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    margin-top: 42px;
+  }
+  .contact-offer-text,
+  .contact-offer-list li {
+    font-size: 16px;
+  }
+}

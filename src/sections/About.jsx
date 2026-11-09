@@ -1,5 +1,5 @@
 const FACTS = [
-  ['agora', 'Bolsista em desenvolvimento, InCor (HC\u2011FMUSP)'],
+  ['agora', 'Desenvolvedor full-stack (bolsista de P&D), InCor (HC\u2011FMUSP)'],
   ['graduação', 'Engenharia de Software, FIAP · Bolsa Mérito'],
   ['técnico', 'Análise e Desenvolvimento de Sistemas, SENAI'],
   ['destaque', '3º lugar no desafio Next 2024'],
@@ -16,18 +16,18 @@ export default function About() {
       </p>
       <p className="about-text">
         <span className="about-reveal">
-          <span className="about-reveal-inner">Sou Pedro Bicas, tenho 21 anos e sou </span>
+          <span className="about-reveal-inner">Sou Pedro Bicas, </span>
         </span>
         <span className="about-reveal">
           <span className="about-reveal-inner">
-            <span className="about-emphasis">desenvolvedor fullstack.</span>{' '}
+            <span className="about-emphasis">desenvolvedor full-stack.</span>{' '}
           </span>
         </span>
         <span className="about-reveal about-muted">
           <span className="about-reveal-inner">
             {' '}
-            Curso Engenharia de Software na FIAP, sou técnico em Desenvolvimento de Sistemas pelo SENAI e trabalho no
-            InCor desde 2024.
+            Construo sistemas web completos com Java, Spring Boot e Angular. Trabalho no InCor desde 2024 e curso
+            Engenharia de Software na FIAP.
           </span>
         </span>
       </p>

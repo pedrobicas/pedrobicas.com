@@ -1,7 +1,7 @@
 import { PROJECTS } from '../data/projects.js';
 import { STACK } from '../data/stack.js';
 import { JOURNEY } from '../data/journey.js';
-import { EMAIL } from '../data/site.js';
+import { CV_PDF, EMAIL } from '../data/site.js';
 
 const WORK = JOURNEY.find((item) => item.year === '2024');
 const EDUCATION = JOURNEY.filter((item) => item.year !== '2024').reverse();
@@ -43,9 +43,10 @@ export default function Resume() {
         <section className="cv-sec">
           <h3>resumo</h3>
           <p>
-            Desenvolvedor full-stack, estudante de Engenharia de Software na FIAP e técnico em Análise e Desenvolvimento
-            de Sistemas pelo SENAI. Experiência com aplicações web, APIs REST e bancos de dados. Atualmente bolsista no
-            InCor (HC-FMUSP).
+            Desenvolvedor full-stack com Java, Spring Boot e Angular. Desenvolvi praticamente sozinho dois sistemas que
+            estão em produção com usuários reais, da arquitetura à preparação para produção com Docker. Em projetos
+            próprios, construí um assistente com RAG (Spring AI e pgvector) com demo pública e um chat em tempo real com
+            WebSocket. Estudante de Engenharia de Software na FIAP (Bolsa Mérito).
           </p>
         </section>
         <section className="cv-sec">
@@ -90,13 +91,11 @@ export default function Resume() {
                 </div>
                 <p>{project.desc}</p>
                 <p className="cv-project-links">
-                  {project.links
-                    .filter((link) => !link.demo)
-                    .map((link) => (
-                      <a key={link.href} href={link.href}>
-                        {link.href.replace('https://', '')}
-                      </a>
-                    ))}
+                  {project.links.map((link) => (
+                    <a key={link.href} href={link.href}>
+                      {link.href.replace('https://', '').replace(/\/$/, '')}
+                    </a>
+                  ))}
                 </p>
               </div>
             ))}
@@ -130,8 +129,11 @@ export default function Resume() {
         </section>
       </article>
       <div className="cv-actions">
-        <button type="button" className="pill solid" data-print>
-          Imprimir / salvar PDF
+        <a className="pill solid" href={CV_PDF} download>
+          Baixar PDF
+        </a>
+        <button type="button" className="pill" data-print>
+          Imprimir
         </button>
         <button type="button" className="pill" data-back>
           Voltar ao portfólio

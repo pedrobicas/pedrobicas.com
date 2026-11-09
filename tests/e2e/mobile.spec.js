@@ -21,6 +21,7 @@ test('modal no celular fecha com botão e devolve foco ao projeto', async ({ pag
 
 test('currículo no celular mostra controles de exportação', async ({ page }) => {
   await page.goto('/curriculo');
-  await expect(page.getByRole('button', { name: 'Imprimir / salvar PDF' })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Baixar PDF' })).toHaveAttribute('href', '/pedro-bicas-curriculo.pdf');
+  await expect(page.getByRole('button', { name: 'Imprimir' })).toBeVisible();
   await expect(page.locator('.cv-sheet')).toBeVisible();
 });

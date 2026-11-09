@@ -3,8 +3,8 @@ import assert from 'node:assert/strict';
 import { readFile, stat } from 'node:fs/promises';
 import { PROJECTS } from '../../src/data/projects.js';
 
-test('os seis projetos prioritários têm capturas reais disponíveis no build estático', async () => {
-  const slugs = ['stack10', 'faxina', 'crypto-analysis', 'chat-tempo-real', 'my-spotify-universe', 'postlocal'];
+test('os projetos prioritários têm capturas reais disponíveis no build estático', async () => {
+  const slugs = ['stack10', 'faxina', 'crypto-analysis', 'chat-tempo-real', 'my-spotify-universe'];
   for (const slug of slugs) {
     const project = PROJECTS.find((item) => item.slug === slug);
     assert.ok(project.media, slug);
@@ -45,5 +45,4 @@ test('capas e loops respeitam os limites de peso definidos para o portfólio', a
 test('capturas de demonstração e execução parcial são identificadas nas legendas', () => {
   assert.match(PROJECTS.find((p) => p.slug === 'crypto-analysis').media.note, /sintéticos/);
   assert.match(PROJECTS.find((p) => p.slug === 'my-spotify-universe').media.note, /demo oficial/);
-  assert.match(PROJECTS.find((p) => p.slug === 'postlocal').media.note, /não foram exercitados/);
 });

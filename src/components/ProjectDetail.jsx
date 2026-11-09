@@ -94,6 +94,7 @@ export default function ProjectDetail() {
             <div className="d-links" hidden={links.length === 0}>
               <ProjectLinks links={links} />
             </div>
+            {project?.demoNote ? <p className="demo-note">{project.demoNote}</p> : null}
           </aside>
         </div>
         <ProjectCaptures project={project} />

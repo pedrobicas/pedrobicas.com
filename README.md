@@ -54,7 +54,10 @@ npm ci
 npm run dev       # desenvolvimento
 npm run build     # build + pré-renderização em dist/
 npm run preview   # serve dist/ como em produção
+npm run cv:pdf    # depois do build: atualiza public/pedro-bicas-curriculo.pdf
 ```
+
+O PDF do currículo é gerado a partir da página `/curriculo`. Rode `npm run build && npm run cv:pdf` sempre que mudar experiência, projetos ou stack, e faça commit do PDF.
 
 ## Qualidade
 
@@ -80,7 +83,7 @@ As fontes das capturas e os modos de demonstração estão em [`docs/media.md`](
 - `src/data/projects.js` — projetos, links e estudos de caso
 - `src/data/stack.js` — tecnologias
 - `src/data/journey.js` — trajetória
-- `src/data/site.js` — email, seções e áreas
+- `src/data/site.js` — email, PDF do currículo, serviços, seções e áreas
 
 ## Código e uso
 

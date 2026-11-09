@@ -9,7 +9,6 @@ As imagens e os vídeos em `public/projects/` foram capturados com Playwright, u
 | Crypto Analysis     | [crypto-platform](https://github.com/pedrobicas/crypto-platform), `20d7f20`                                                                                        | Modo demonstração nativo, com preços sintéticos e indicadores calculados pelo app.                        |
 | Chat em tempo real  | [java-realtime-chat](https://github.com/pedrobicas/java-realtime-chat), `05482fb`; [web-realtime-chat](https://github.com/pedrobicas/web-realtime-chat), `4f2e0f5` | Front e servidor locais; mensagens públicas e privadas entre três perfis fictícios.                       |
 | My Spotify Universe | [my-universe-spotify](https://github.com/pedrobicas/my-universe-spotify), `25e325a`                                                                                | Modo demo oficial da implantação pública, com catálogo fictício. OAuth e streaming real não foram usados. |
-| Postlocal           | [postlocal](https://github.com/pedrobicas/postlocal), `5be8b6e`                                                                                                    | Páginas públicas do frontend local. Autenticação, geração de conteúdo e pagamentos não foram exercitados. |
 
 Os commits identificam os repositórios consultados. Nas demos públicas, a versão publicada pode diferir desses commits. Nenhuma interface foi recriada ou modificada para a captura.
 

@@ -21,6 +21,7 @@ function FeaturedProject({ project, index }) {
             Detalhes
           </a>
         </div>
+        {project.demoNote ? <p className="demo-note">{project.demoNote}</p> : null}
       </div>
     </article>
   );
