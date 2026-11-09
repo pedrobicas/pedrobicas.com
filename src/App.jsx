@@ -1,3 +1,4 @@
+import { Analytics } from '@vercel/analytics/react';
 import { usePortfolioRuntime } from './hooks/usePortfolioRuntime.js';
 import Loader from './components/Loader.jsx';
 import CustomCursor from './components/CustomCursor.jsx';
@@ -41,6 +42,7 @@ export default function App() {
       <ProjectPreview />
       <ProjectDetail />
       <Overlays />
+      <Analytics />
     </>
   );
 }
