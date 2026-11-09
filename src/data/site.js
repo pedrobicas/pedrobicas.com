@@ -1,5 +1,8 @@
 export const EMAIL = 'pedro.bicas14@gmail.com';
 
+// Gerado por `npm run cv:pdf` a partir da página /curriculo.
+export const CV_PDF = '/pedro-bicas-curriculo.pdf';
+
 export const SECTION_LINKS = [
   ['topo', 'Início'],
   ['sobre', 'Sobre'],
