@@ -1,4 +1,4 @@
-import { EMAIL } from '../data/site.js';
+import { EMAIL, PROJECT_MAILTO, SERVICES } from '../data/site.js';
 
 function Arrow() {
   return (
@@ -21,6 +21,21 @@ export default function Contact() {
           ou pelo LinkedIn.
         </p>
       </div>
+      <section className="contact-offer" aria-labelledby="contato-servicos">
+        <h3 className="contact-channel" id="contato-servicos">
+          O que eu faço
+        </h3>
+        <div className="contact-offer-body">
+          <ul className="contact-offer-list">
+            {SERVICES.map((service) => (
+              <li key={service}>{service}</li>
+            ))}
+          </ul>
+          <a className="contact-brief" href={PROJECT_MAILTO}>
+            Falar sobre um projeto <Arrow />
+          </a>
+        </div>
+      </section>
       <div className="contact-channels">
         <div className="contact-row contact-email">
           <button type="button" className="email-big" data-cursor="copiar">

@@ -83,7 +83,7 @@ As fontes das capturas e os modos de demonstração estão em [`docs/media.md`](
 - `src/data/projects.js` — projetos, links e estudos de caso
 - `src/data/stack.js` — tecnologias
 - `src/data/journey.js` — trajetória
-- `src/data/site.js` — email, PDF do currículo, serviços de freelance, seções e áreas
+- `src/data/site.js` — email, PDF do currículo, serviços, seções e áreas
 
 ## Código e uso
 
