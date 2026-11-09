@@ -26,7 +26,7 @@ test('há uma página para cada projeto, além de home, galeria e currículo', (
 });
 
 test('projetos com captura real usam a imagem como prévia de compartilhamento', () => {
-  for (const slug of ['stack10', 'faxina', 'crypto-analysis', 'chat-tempo-real', 'my-spotify-universe', 'postlocal']) {
+  for (const slug of ['stack10', 'faxina', 'crypto-analysis', 'chat-tempo-real', 'my-spotify-universe']) {
     assert.equal(pageMeta({ mode: 'projetos', slug }).image.path, `/projects/${slug}/cover.webp`);
   }
   assert.equal(pageMeta({ mode: 'projetos', slug: 'pedrobicas-com' }).image.path, '/og.png');

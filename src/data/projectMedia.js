@@ -152,33 +152,4 @@ export const PROJECT_MEDIA = {
       },
     ],
   },
-  postlocal: {
-    cover: '/projects/postlocal/cover.webp',
-    thumbnail: '/projects/postlocal/cover-800.webp',
-    video: '/projects/postlocal/interaction.webm',
-    note: 'Páginas públicas da aplicação original. Login, geração de conteúdo e pagamentos não foram exercitados nesta captura.',
-    shots: [
-      {
-        src: '/projects/postlocal/plans-desktop.webp',
-        width: 1600,
-        height: 900,
-        mobile: false,
-        caption: 'Seção de planos original da landing, com os três planos de exemplo do projeto.',
-      },
-      {
-        src: '/projects/postlocal/register-desktop.webp',
-        width: 1600,
-        height: 900,
-        mobile: false,
-        caption: 'Cadastro real preenchido com exemplos fictícios e indicador nativo de força da senha.',
-      },
-      {
-        src: '/projects/postlocal/landing-mobile.webp',
-        width: 390,
-        height: 844,
-        mobile: true,
-        caption: 'Landing original responsiva em 390 × 844.',
-      },
-    ],
-  },
 };
